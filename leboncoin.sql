@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  localhost
--- Généré le :  Mar 23 Mai 2023 à 09:11
+-- Généré le :  Mar 23 Mai 2023 à 12:36
 -- Version du serveur :  5.7.11
--- Version de PHP :  5.6.18
+-- Version de PHP :  7.0.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -19,6 +19,8 @@ SET time_zone = "+00:00";
 --
 -- Base de données :  `leboncoin`
 --
+CREATE DATABASE IF NOT EXISTS `leboncoin` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `leboncoin`;
 
 -- --------------------------------------------------------
 
