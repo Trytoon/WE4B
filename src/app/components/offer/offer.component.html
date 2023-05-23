@@ -1,18 +1,28 @@
-<div class="card p-3" style="width: 18rem;">
-  <div class="card-header text-center"> </div>
-  <img alt="..." class="card-img-top" src="">
-  <div class="card-body">
-    <ul class="list-group list-group-flush">
-      <li class="list-group-item">Mail:</li>
-      <li class="list-group-item">Phone:</li>
-    </ul>
-  </div>
-  <div class="card-footer">
-    <div>
-      <a class="card-link" href="#"></a>
-    </div>
-    <div>
-      <a class="card-link" href="#"></a>
+<div class="d-flex justify-content-center">
+  <div class="offer">
+    <div class="card">
+      <div class="row no-gutters">
+        <div class="col-md-4 d-flex justify-content-center">
+          <img src="https://eu-images.contentstack.com/v3/assets/blt5004e64d3579c43f/blt7b1aaa212fb2c7dd/6077ede1bc48cb2d2566f8f9/mcbaguette.jpg?width=1200&height=630&crop=1200:630" class="card-img" alt="Image">
+        </div>
+        <div class="col-md-8">
+          <div class="card-body d-flex flex-column justify-content-between " style="height: 275px;"><!--espacement correctement géré entre les deux sous divisions-->
+            <div><!--sous division 1 alignée sur le haut du contenu de la carte-->
+              <h5 class="card-title">{{offer.title}}</h5>
+              <p class="card-text">{{offer.price}}€</p>
+              <div *ngIf="offer.shippable">
+                <p class="delivery-option">Livraison Possible</p>
+              </div>
+            </div>
+            <div class = "mt-auto offer-info"><!--sous division 2 alignée sur le bas du contenu de la carte-->
+                {{offer.categorie}}<br>
+                Belfort 90000<br>
+                12 Mars 2023 à 11h44
+            </div>
+          </div>
+
+        </div>
+      </div>
     </div>
   </div>
 </div>

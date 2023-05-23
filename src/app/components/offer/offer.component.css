@@ -1,0 +1,21 @@
+.card {
+  border-radius: 0.8rem;
+  border: 1px solid rgb(202, 209, 217);
+  margin: 5px;
+  padding: 10px;
+  max-width: 800px;
+  max-height: 300px;
+}
+
+.delivery-option {
+  background-color: #c5e0b4;
+  display: inline;
+  padding: 5px;
+}
+
+.offer-info {
+ color: gray;
+}
+
+
+
