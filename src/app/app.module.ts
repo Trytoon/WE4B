@@ -9,6 +9,10 @@ import { OfferListComponent } from './components/offer-list/offer-list.component
 import { FooterComponent } from './components/footer/footer.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
+import { ProfilComponent } from './components/profil/profil.component';
+import { UserComponent } from './components/user/user.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+
 
 @NgModule({
   declarations: [
@@ -18,6 +22,9 @@ import { RegisterComponent } from './components/register/register.component';
     FooterComponent,
     LoginComponent,
     RegisterComponent,
+    ProfilComponent,
+    UserComponent,
+    NavbarComponent,
   ],
   imports: [
     BrowserModule,

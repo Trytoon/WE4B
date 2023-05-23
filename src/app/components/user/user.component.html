@@ -1,0 +1,55 @@
+
+<p>{{user.last_name}} </p>
+<p>{{user.first_name}} </p>
+<p>{{user.email}} </p>
+<p>{{user.reg_date}} </p>
+
+
+
+
+
+<form class="input-group form-floating mb-7  ">
+    
+    
+    <input type="text" class="form-control" id="floatingInputValue1" placeholder="{{user.last_name}}" value="{{user.last_name}}"  aria-describedby="button-addon1">
+    <label for="floatingInputValue1">Votre nom de famille:</label>
+    <button class="btn btn-outline-secondary" type="button" id="button-addon1">Modifier</button>
+
+
+   
+
+    
+</form>
+
+<form class="form-floating input-group mb-7">
+    <input type="text" class="form-control" id="floatingInputValue2" placeholder="{{user.first_name}}" value="{{user.first_name}}" aria-label="Recipient's username" aria-describedby="button-addon2">
+    <label for="floatingInputValue2" class="form-label">Votre prénom:</label>
+    <button class="btn btn-outline-secondary" type="button" id="button-addon2">Modifier</button> 
+</form>
+
+<form class="form-floating input-group mb-7">
+    <input type="text" class="form-control" id="floatingInputValue2" placeholder="{{user.email}}" value="{{user.email}}" aria-label="Recipient's username" aria-describedby="button-addon2">
+    <label for="floatingInputValue2" class="form-label">Votre adresse mail:</label>
+    <button class="btn btn-outline-secondary" type="button" id="button-addon2">Modifier</button> 
+</form>
+<form class="form-floating input-group mb-7">
+    <input type="text" class="form-control" id="floatingInputValue2" placeholder="{{user.address.number}}" value="{{user.address.number}}" aria-label="Recipient's username" aria-describedby="button-addon2">
+    <label for="floatingInputValue2" class="form-label">Votre numéro de rue:</label>
+    <button class="btn btn-outline-secondary" type="button" id="button-addon2">Modifier</button> 
+</form>
+<form class="form-floating input-group mb-7">
+    <input type="text" class="form-control" id="floatingInputValue2" placeholder="{{user.address.street}}" value="{{user.address.street}}" aria-label="Recipient's username" aria-describedby="button-addon2">
+    <label for="floatingInputValue2" class="form-label">Votre rue:</label>
+    <button class="btn btn-outline-secondary" type="button" id="button-addon2">Modifier</button> 
+</form>
+
+<form class="form-floating input-group mb-7">
+    <input type="text" class="form-control" id="floatingInputValue2" placeholder="{{user.address.zip_code}}" value="{{user.address.zip_code}}" aria-label="Recipient's username" aria-describedby="button-addon2">
+    <label for="floatingInputValue2" class="form-label">Votre code postal:</label>
+    <button class="btn btn-outline-secondary" type="button" id="button-addon2">Modifier</button> 
+</form>
+<form class="form-floating input-group mb-7">
+    <input type="text" class="form-control" id="floatingInputValue2" placeholder="{{user.address.city}}" value="{{user.address.city}}" aria-label="Recipient's username" aria-describedby="button-addon2">
+    <label for="floatingInputValue2" class="form-label">Votre ville:</label>
+    <button class="btn btn-outline-secondary" type="button" id="button-addon2">Modifier</button> 
+</form>
