@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Offer} from "../../../classes/Offer";
+import {OfferService} from "../../services/offer.service";
 
 @Component({
   selector: 'app-offer-list',
@@ -9,12 +10,10 @@ import {Offer} from "../../../classes/Offer";
 export class OfferListComponent implements OnInit {
 
   offerArray : Offer[] = [];
-  constructor() {
-    this.offerArray.push(new Offer("Vélo d'appartement très stylé",5,172,"test","Sport","test", new Date(), true));
-    this.offerArray.push(new Offer("test",5,172,"test","test","test", new Date(), true));
-    this.offerArray.push(new Offer("test",5,172,"test","test","test", new Date(), false));
-    this.offerArray.push(new Offer("test",5,172,"test","test","test", new Date(), false));
+  constructor(service : OfferService) {
+    this.offerArray = service.getOffers();
   }
   ngOnInit(): void {
   }
+
 }
