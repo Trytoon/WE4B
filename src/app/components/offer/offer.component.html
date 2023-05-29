@@ -1,18 +1,28 @@
-<div class="card p-3" style="width: 18rem;">
-  <div class="card-header text-center"> </div>
-  <img alt="..." class="card-img-top" src="">
-  <div class="card-body">
-    <ul class="list-group list-group-flush">
-      <li class="list-group-item">Mail:</li>
-      <li class="list-group-item">Phone:</li>
-    </ul>
-  </div>
-  <div class="card-footer">
-    <div>
-      <a class="card-link" href="#"></a>
-    </div>
-    <div>
-      <a class="card-link" href="#"></a>
+<div class="d-flex justify-content-center">
+  <div class="offer" style="width: 60%">
+    <div class="card">
+      <div class="row no-gutters">
+        <div class="col-md-4">
+          <img src="https://i.pinimg.com/originals/5b/f6/0a/5bf60a85a633b2add2911175ea8c4f4d.jpg" class="card-img" alt="Image">
+        </div>
+        <div class="col-md-8">
+          <div class="card-body d-flex flex-column justify-content-between " style="height: 275px;"><!--espacement correctement géré entre les deux sous divisions-->
+            <div><!--sous division 1 alignée sur le haut du contenu de la carte-->
+              <h5 class="card-title">{{offer.title}}</h5>
+              <p class="card-text">{{offer.price}}€</p>
+              <div *ngIf="offer.shippable">
+                <p class="delivery-option">Livraison Possible</p>
+              </div>
+            </div>
+            <div class = "mt-auto offer-info"><!--sous division 2 alignée sur le bas du contenu de la carte-->
+                {{offer.categorie}}<br>
+                Belfort 90000<br>
+                12 Mars 2023 à 11h44
+            </div>
+          </div>
+
+        </div>
+      </div>
     </div>
   </div>
 </div>
