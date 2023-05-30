@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import { Router } from '@angular/router';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
@@ -11,9 +11,9 @@ import {tap} from "rxjs";
 })
 export class LoginComponent {
   loginForm: FormGroup;
-  showErrorEmpty: boolean = false;
-  showErrorData : boolean = false;
   rememberMe: boolean = false;
+  showError : boolean = false;
+  @Input() errorMessage! : string;
 
   constructor(private formBuilder: FormBuilder, private router: Router, private http: HttpClient) {
 
@@ -50,8 +50,8 @@ export class LoginComponent {
               if (response.success == "true") {
                 this.router.navigate(['/offer-list']);
               } else {
-                this.showErrorEmpty = false;
-                this.showErrorData = true;
+                this.showError = true;
+                this.errorMessage = "Mauvais nom d'utilisateur ou mot de passe.";
               }
             })
           )
@@ -60,8 +60,8 @@ export class LoginComponent {
 
       }
     } else {
-      this.showErrorData = false;
-      this.showErrorEmpty = true;
+      this.showError = true;
+      this.errorMessage = "Veuillez remplir le formulaire !";
     }
   }
 }
