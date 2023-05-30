@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Offer} from "../../../classes/Offer";
-import { OfferService } from 'src/app/services/offer.service';
+import { OfferDetailService } from 'src/app/services/offer-detail.service';
 
 @Component({
   selector: 'app-offer',
@@ -10,7 +10,7 @@ import { OfferService } from 'src/app/services/offer.service';
 export class OfferComponent implements OnInit {
 
   offer : Offer;
-  constructor(service : OfferService) {
+  constructor(service : OfferDetailService) {
     this.offer = service.getOffer();
   };
   

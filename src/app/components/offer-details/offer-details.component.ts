@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { OfferService } from 'src/app/services/offer.service';
+import { OfferDetailService } from 'src/app/services/offer-detail.service';
 import { Offer } from 'src/classes/Offer';
 
 @Component({
@@ -8,9 +8,9 @@ import { Offer } from 'src/classes/Offer';
   styleUrls: ['./offer-details.component.css']
 })
 export class OfferDetailsComponent {
-  offer : Offer;
+    offer : Offer;
 
-  constructor(service : OfferService) {
-    this.offer = service.getOffer()
-  }
+    constructor(service : OfferDetailService) {
+      this.offer = service.getOffer()
+    }
 }
