@@ -8,9 +8,9 @@ import { Offer } from 'src/classes/Offer';
   styleUrls: ['./offer-details.component.css']
 })
 export class OfferDetailsComponent {
-    offer : Offer;
+  offer : Offer;
 
-    constructor(service : OfferService) {
-      this.offer = service.getOffer()
-    }
+  constructor(service : OfferService) {
+    this.offer = service.getOffer()
+  }
 }

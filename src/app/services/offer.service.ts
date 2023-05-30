@@ -8,8 +8,8 @@ export class OfferService {
 
   offer : Offer;
 
-  constructor(service : OfferService) { 
-    this.offer = service.getOffer()
+  constructor() { 
+    this.offer = this.getOffer()
   }
 
   getOffer() : Offer {
