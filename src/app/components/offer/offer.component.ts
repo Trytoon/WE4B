@@ -9,7 +9,7 @@ import { OfferDetailService } from 'src/app/services/offer-detail.service';
 })
 export class OfferComponent implements OnInit {
 
-  offer : Offer;
+  @Input() offer! : Offer;
   constructor(service : OfferDetailService) {
     this.offer = service.getOffer();
   };
