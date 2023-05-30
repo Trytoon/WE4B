@@ -5,17 +5,35 @@ import { AppComponent } from './app.component';
 
 import { HttpClientModule } from '@angular/common/http';
 import { OfferComponent } from './components/offer/offer.component';
+import { OfferListComponent } from './components/offer-list/offer-list.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { LoginComponent } from './components/login/login.component';
+import { RegisterComponent } from './components/register/register.component';
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {RouterLink, RouterOutlet} from "@angular/router";
+import {AppRoutingModule} from "./app-routing.module";
+import { NavbarComponent } from './components/navbar/navbar.component';
 import { OfferDetailsComponent } from './components/offer-details/offer-details.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     OfferComponent,
-    OfferDetailsComponent,
+    OfferListComponent,
+    FooterComponent,
+    LoginComponent,
+    RegisterComponent,
+    NavbarComponent,
+    OfferDetailsComponent
   ],
   imports: [
     BrowserModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule,
+    RouterLink,
+    RouterOutlet,
+    AppRoutingModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

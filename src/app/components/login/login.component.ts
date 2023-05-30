@@ -1,0 +1,67 @@
+import { Component, OnInit } from '@angular/core';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import { Router } from '@angular/router';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {tap} from "rxjs";
+
+@Component({
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css']
+})
+export class LoginComponent {
+  loginForm: FormGroup;
+  showErrorEmpty: boolean = false;
+  showErrorData : boolean = false;
+  rememberMe: boolean = false;
+
+  constructor(private formBuilder: FormBuilder, private router: Router, private http: HttpClient) {
+
+    this.loginForm = this.formBuilder.group({
+      username: new FormControl('', [Validators.required, Validators.maxLength(15)]),
+      password: new FormControl('', [Validators.required])
+    });
+  }
+
+  onSubmit() {
+    if (this.loginForm.valid) {
+      //On recupere les champs du formulaire
+      const usernameControl = this.loginForm.get('username');
+      const passwordControl = this.loginForm.get('password');
+
+      //Si ces champs sont définis, alors on regarde leur valeur
+      if (usernameControl && passwordControl) {
+        const username = usernameControl.value;
+        const password = passwordControl.value;
+
+        //todo: Si la case rester connecté est cochée, demander au serveur backend de setup des cookies
+        if (this.rememberMe) {
+          console.log("Alors comme ca tu veux qu'on se souvienne de toi ?")
+        }
+
+        const data = {
+          username: username,
+          password: password
+        };
+
+        this.http.post<any>('http://localhost/WE4B/login.php', data)
+          .pipe(
+            tap(response => {
+              if (response.success == "true") {
+                this.router.navigate(['/offer-list']);
+              } else {
+                this.showErrorEmpty = false;
+                this.showErrorData = true;
+              }
+            })
+          )
+          .subscribe();
+
+
+      }
+    } else {
+      this.showErrorData = false;
+      this.showErrorEmpty = true;
+    }
+  }
+}

@@ -1,18 +1,30 @@
 import { Injectable } from '@angular/core';
-import { Offer } from 'src/classes/Offer';
+import {Offer} from "../../classes/Offer";
 
 @Injectable({
   providedIn: 'root'
 })
 export class OfferService {
 
-  offer : Offer;
-
-  constructor() { 
-    this.offer = this.getOffer()
+  offerArray : Offer[] = [];
+  constructor() {
+    this.offerArray.push(new Offer("Velo",5,172,"test","Sport","test", new Date(), true));
+    this.offerArray.push(new Offer("Tele",5,172,"test","test","test", new Date(), true));
+    this.offerArray.push(new Offer("Table",5,172,"test","test","test", new Date(), false));
+    this.offerArray.push(new Offer("Ordinateur",5,172,"test","test","test", new Date(), false));
   }
 
-  getOffer() : Offer {
-    return new Offer('Vélo', 4, 400, 'Super vélo pour grand-mère', 'sport', 'John Doe', new Date('07/07/2023'), false);
+  getOffers() : Offer[] {
+    return this.offerArray
+  }
+
+  filterOffers(filter: string): void {
+    this.offerArray = this.offerArray.filter((offer: Offer) => {
+      // Vérifier si l'offre correspond au filtre
+      return (
+        offer.title.toLowerCase().includes(filter.toLowerCase()) ||
+        offer.categorie.toLowerCase().includes(filter.toLowerCase())
+      );
+    });
   }
 }
