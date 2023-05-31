@@ -7,6 +7,8 @@ import {OfferListComponent} from "./components/offer-list/offer-list.component";
 import {NavbarComponent} from "./components/navbar/navbar.component";
 import { OfferDetailsComponent } from './components/offer-details/offer-details.component';
 import { OfferAddComponent } from './components/offer-add/offer-add.component';
+import { AppComponent } from './app.component';
+import { HomeComponent } from './components/home/home.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -14,7 +16,7 @@ const routes: Routes = [
   { path: 'offer-add', component: OfferAddComponent},
   { path: 'offer-list', component: OfferListComponent},
   { path: 'offer-list/:index', component: OfferDetailsComponent},
-  { path: '', component: NavbarComponent}
+  { path: '', component: HomeComponent}
 ];
 
 @NgModule({
