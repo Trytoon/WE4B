@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Offer} from "../../../classes/Offer";
-import { OfferDetailService } from 'src/app/services/offer-detail.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-offer',
@@ -10,10 +10,20 @@ import { OfferDetailService } from 'src/app/services/offer-detail.service';
 export class OfferComponent implements OnInit {
 
   @Input() offer! : Offer;
-  constructor(service : OfferDetailService) {
-    this.offer = service.getOffer();
-  };
+  constructor(private router : Router) {};
   
   ngOnInit(): void {};
+
+  onClick(event : Event) : void {
+    if ((event.target as HTMLElement).id == "like") {
+      console.log("like !");
+    } else {
+      // Read more about the selected offer
+      // this.router.navigate(['/offer']) old version
+      this.router.navigate(['/', 'offer-list', this.offer.index_offer])
+    }
+
+    //event.stopPropagation();
+  }
 
 }
