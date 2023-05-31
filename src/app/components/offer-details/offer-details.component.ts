@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { OfferDetailService } from 'src/app/services/offer-detail.service';
+import { UserService } from 'src/app/services/user.service';
 import { Offer } from 'src/classes/Offer';
+import { User } from 'src/classes/User';
 
 @Component({
   selector: 'app-offer-details',
@@ -9,8 +11,10 @@ import { Offer } from 'src/classes/Offer';
 })
 export class OfferDetailsComponent {
     offer : Offer;
+    seller : User;
 
-    constructor(service : OfferDetailService) {
-      this.offer = service.getOffer()
+    constructor(serviceOffer : OfferDetailService, serviceUser : UserService) {
+      this.offer = serviceOffer.getOffer();
+      this.seller = serviceUser.getUser(); // il faudra recuperer l'utilisateur qui a poste l'offre
     }
 }
