@@ -15,6 +15,7 @@ import {AppRoutingModule} from "./app-routing.module";
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { OfferDetailsComponent } from './components/offer-details/offer-details.component';
 import { OfferAddComponent } from './components/offer-add/offer-add.component';
+import { HomeComponent } from './components/home/home.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { OfferAddComponent } from './components/offer-add/offer-add.component';
     NavbarComponent,
     OfferDetailsComponent,
     OfferAddComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,
