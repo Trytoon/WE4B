@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Offer} from "../../../classes/Offer";
 import {OfferService} from "../../services/offer.service";
+import {FilterService} from "../../services/filter.service";
 
 @Component({
   selector: 'app-offer-list',
@@ -8,12 +9,13 @@ import {OfferService} from "../../services/offer.service";
   styleUrls: ['./offer-list.component.css']
 })
 export class OfferListComponent implements OnInit {
+  filteredOffers: Offer[] = [];
 
-  offerArray : Offer[] = [];
-  constructor(service : OfferService) {
-    this.offerArray = service.getOffers();
-  }
+  constructor(public service: OfferService, private filterService: FilterService) {}
+
   ngOnInit(): void {
+    this.filterService.getFilter().subscribe((filter: string) => {
+      this.filteredOffers = this.service.filterOffers(filter);
+    });
   }
-
 }

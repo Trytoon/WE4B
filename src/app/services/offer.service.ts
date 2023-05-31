@@ -22,13 +22,17 @@ export class OfferService {
     return this.offerArray[idx];
   }
 
-  filterOffers(filter: string): void {
-    this.offerArray = this.offerArray.filter((offer: Offer) => {
-      // Vérifier si l'offre correspond au filtre
-      return (
-        offer.title.toLowerCase().includes(filter.toLowerCase()) ||
-        offer.categorie.toLowerCase().includes(filter.toLowerCase())
-      );
-    });
+  filterOffers(filter: string): Offer[] {
+
+    if (filter === '') {
+      return this.offerArray;
+    } else {
+      return this.offerArray.filter((offer: Offer) => {
+        return (
+          offer.title.toLowerCase().includes(filter.toLowerCase()) ||
+          offer.categorie.toLowerCase().includes(filter.toLowerCase())
+        );
+      });
+    }
   }
 }
