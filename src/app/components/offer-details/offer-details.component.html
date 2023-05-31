@@ -4,23 +4,16 @@
       <div class="card">
         <img src="https://i.pinimg.com/originals/5b/f6/0a/5bf60a85a633b2add2911175ea8c4f4d.jpg" class="card-img" alt="Image">
         <div class="card-body">
-          <h5 class="card-title">Un bel oeil</h5>
-          <p class="card-text">Description de l'offre...</p>
-          <p class="card-text"><strong>Prix :</strong> 100 €</p>
-          <p class="card-text"><strong>Lieu :</strong> Paris</p>
-          <p class="card-text"><strong>Date de publication :</strong> 29 mai 2023</p>
+          <h5 class="card-title">{{offer.title}}</h5>
+          <p class="card-text"><strong>Description :</strong> {{offer.description}}</p>
+          <p class="card-text"><strong>Prix :</strong> {{offer.price}} €</p>
+          <p class="card-text"><strong>Lieu :</strong> Adresse</p>
+          <p class="card-text"><strong>Date de publication :</strong> {{offer.post_date | date : 'dd/MM/YYYY'}}</p>
           <hr>
-          <h6>Informations supplémentaires :</h6>
-          <ul>
-            <li>Information 1</li>
-            <li>Information 2</li>
-            <li>Information 3</li>
-          </ul>
-          <hr>
-          <h6>Coordonnées du vendeur :</h6>
-          <p>Nom : John Doe</p>
-          <p>Email : john.doe@example.com</p>
-          <p>Téléphone : 0600112233</p>
+          <h6>Contact vendeur :</h6>
+          <p>Nom : {{seller.last_name | uppercase}} {{seller.first_name | titlecase}}</p>
+          <p>Email : {{seller.email}}</p>
+          <p>Téléphone : 0666666666</p> <!-- TODO: Add phone number to user-->
         </div>
       </div>
     </div>
