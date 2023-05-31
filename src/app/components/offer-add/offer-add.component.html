@@ -1,1 +1,94 @@
-<p>offer-add works!</p>
+<div class="background-container">
+  <div class = "container p-5">
+    <div class = "row align-items-center justify-content-center">
+      <div class = "col-sm-8 col-md-6 col-lg-8 bg-white rounded p-4 shadow">
+        <h3 class="mb-5" align="center">Nouvelle offre</h3>
+
+        <p class="erreur">Voir les todos code</p>
+        <div *ngIf="showError === true" class = "erreur">
+          {{errorMessage}}
+        </div>
+        <form [formGroup]="addOfferForm" (ngSubmit)="onSubmit()">
+          <!-- Titre -->
+          <div class="mb-4">
+            <label class="form-label" for="title">Titre :</label>
+            <input type="text" class="form-control" id="title" formControlName="title" placeholder="Entrez le titre de l'offre" maxlength="100">
+          </div>
+
+          <!-- Description -->
+          <div class="mb-4">
+            <label class="form-label" for="description">Description :</label>
+            <textarea type="text" class="form-control" id="description" formControlName="description" placeholder="Entrez une description de l'offre"></textarea>
+          </div>
+
+          <!-- Prix -->
+          <div class="mb-4">
+            <label class="form-label">Prix :</label>
+            <div class="input-group">
+              <input type="number" class="form-control" name="price" min="0">
+              <span class="input-group-text">€</span>
+            </div>
+          </div>         
+          
+          <!-- Categories -->
+          <!-- TODO: Les mettre en fonction de la BDD -->
+          <div class="mb-4">
+            <label class="form-label" for="category">Catégorie :</label>
+            <select class="form-select" id="category" name="category" formControlName="category">
+              <option value="">Sélectionnez une catégorie</option>
+              <option value="Sport">Sport</option>
+              <option value="High tech">High tech</option>
+              <option value="Mobilier">Mobilier</option>
+              <!-- Ajoutez d'autres options pour les différentes catégories -->
+            </select>
+          </div>
+
+          <!-- Photos -->
+          <div class="mb-3">
+            <label for="photos" class="form-label">Photo(s)</label>
+            <input class="form-control" type="file" id="photos" formControlName="photos" multiple>
+          </div>
+
+          <!-- Livrable -->
+          <div class="mb-4">
+            <label class="form-label">Est livrable ?</label>
+            <div class="form-check form-check-inline ps-md-5">
+              <input class="form-check-input" type="radio" name="shippable" id="shippable-yes" formControlName="shippable" value="true">
+              <label class="form-check-label " for="shippable-yes">Oui</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="shippable" id="shippable-no" formControlName="shippable" value="false">
+              <label class="form-check-label" for="shippable-no">Non</label>
+            </div>
+          </div>
+
+          <!-- Adresse -->
+          <div class="mb-4 row g-2">
+            <div class="col-md-4">
+              <label for="num_road" class="form-label">N° rue :</label>
+              <input type="number" class="form-control" id="num_road" name="num_road" formControlName="num_road" placeholder="n°" min="0">
+            </div>
+            <div class="col-md-8">
+              <label for="road" class="form-label">Rue :</label>
+              <input type="text" class="form-control" id="road"  name="road" formControlName="road" placeholder="rue">
+            </div>
+          </div>
+          <div class="mb-4 row g-2">
+            <div class="col-md-8">
+              <label for="city" class="form-label">Ville :</label>
+              <input type="text" class="form-control" id="city" placeholder="Ville">
+            </div>
+            <div class="col-md-4">
+              <label for="zip_code" class="form-label">Code zip :</label>
+              <input type="text" class="form-control" id="zip_code" placeholder="75000">
+            </div>
+          </div>
+          
+          
+          <button type="submit" class="btn btn-success w-100">Poster</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+  
