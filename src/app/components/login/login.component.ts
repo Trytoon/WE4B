@@ -3,6 +3,8 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import { Router } from '@angular/router';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {tap} from "rxjs";
+import {UserService} from "../../services/user.service";
+import {Address} from "../../../classes/Address";
 
 @Component({
   selector: 'app-login',
@@ -15,12 +17,14 @@ export class LoginComponent {
   showError : boolean = false;
   @Input() errorMessage! : string;
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private http: HttpClient) {
+  constructor(private formBuilder: FormBuilder, private router: Router, private http: HttpClient, private userService : UserService) {
 
     this.loginForm = this.formBuilder.group({
       username: new FormControl('', [Validators.required, Validators.maxLength(15)]),
       password: new FormControl('', [Validators.required])
     });
+
+    this.userService.logout();
   }
 
   onSubmit() {
@@ -48,6 +52,16 @@ export class LoginComponent {
           .pipe(
             tap(response => {
               if (response.success == "true") {
+                if (response.user) {
+                  this.userService.set_user(
+                      response.user.pseudo,
+                      response.user.prenom,
+                      response.user.nom,
+                      response.user.email,
+                      new Date(),
+                      new Address(12, "rue du chene", "Strasbourg", "67000")
+                  )
+                }
                 this.router.navigate(['/offer-list']);
               } else {
                 this.showError = true;

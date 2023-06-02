@@ -4,6 +4,7 @@ import {NavigationEnd, Router} from "@angular/router";
 import {OfferService} from "../../services/offer.service";
 import {FilterService} from "../../services/filter.service";
 import {filter} from "rxjs";
+import {UserService} from "../../services/user.service";
 
 @Component({
   selector: 'app-navbar',
@@ -14,7 +15,7 @@ export class NavbarComponent {
 
   searchForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private filterService: FilterService) {
+  constructor(private formBuilder: FormBuilder, private router: Router, private filterService: FilterService, public userService : UserService) {
     this.searchForm = this.formBuilder.group({
       filter: ['']
     });
@@ -23,8 +24,12 @@ export class NavbarComponent {
     this.searchForm.get('filter')?.valueChanges.subscribe((value: string) => {
       if (!value) {
         this.filterService.clearFilter();
+      } else {
+        this.filterService.setFilter(value);
       }
     });
+
+    console.log(this.userService.user_logged());
   }
 
   onSearch() {
