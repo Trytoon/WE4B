@@ -9,5 +9,6 @@ export class User {
               public email : string,
               public reg_date : Date,
               public address : Address,
-              public password : string) {}
+              public password : string,
+              public picture : string) {}
 }
