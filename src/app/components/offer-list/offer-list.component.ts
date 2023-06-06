@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Offer} from "../../../classes/Offer";
+import {OfferService} from "../../services/offer.service";
+import {FilterService} from "../../services/filter.service";
 
 @Component({
   selector: 'app-offer-list',
@@ -7,14 +9,13 @@ import {Offer} from "../../../classes/Offer";
   styleUrls: ['./offer-list.component.css']
 })
 export class OfferListComponent implements OnInit {
+  filteredOffers: Offer[] = [];
 
-  offerArray : Offer[] = [];
-  constructor() {
-    this.offerArray.push(new Offer("Vélo d'appartement très stylé",5,172,"test","Sport","test", new Date(), true));
-    this.offerArray.push(new Offer("test",5,172,"test","test","test", new Date(), true));
-    this.offerArray.push(new Offer("test",5,172,"test","test","test", new Date(), false));
-    this.offerArray.push(new Offer("test",5,172,"test","test","test", new Date(), false));
-  }
+  constructor(public service: OfferService, private filterService: FilterService) {}
+
   ngOnInit(): void {
+    this.filterService.getFilter().subscribe((filter: string) => {
+      this.filteredOffers = this.service.filterOffers(filter);
+    });
   }
 }

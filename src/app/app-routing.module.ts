@@ -18,6 +18,10 @@ const routes:Routes=[
   {path:'footer',component:FooterComponent},
   {path:'offerlist',component:OfferListComponent},
   { path: "", redirectTo: "/profil", pathMatch: "full" },
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
+  { path: 'offer-list', component: OfferListComponent},
+  { path: '', component: NavbarComponent}
 
 ]
 
@@ -29,5 +33,7 @@ const routes:Routes=[
   exports:[
     RouterModule
   ],
+
+
 })
 export class AppRoutingModule { }
