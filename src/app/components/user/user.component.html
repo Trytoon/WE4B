@@ -4,21 +4,15 @@
   	<hr>
 	<div class="row">
       <!-- left column -->
-      <div class="col-md-3">
-        <div class="text-center">
-          <img src="//placehold.it/100" class="avatar img-circle" alt="avatar">
-          <h6>Upload a different photo...</h6>
-          
-          <input type="file" class="form-control">
-        </div>
-      </div>
+
+      
       
       <!-- edit form column -->
-      <div class="col-md-9 personal-info">
+      <div class="col-md-9 ">
         
         <h3>Mes informations</h3>
         
-        <form class="form-horizontal" role="form"   >
+        <form role="form"   >
           
           <div class=" mb-4 form-group">
             <label class="col-lg-3 control-label">First name:</label>
@@ -47,6 +41,42 @@
               <input class="form-control" type="text"   [(ngModel)]="user.nickname" name="nickname">
             </div>
           </div>
+
+
+          <div class="mb-4 row g-2">
+            <div class="form-group">
+              <div class="col col-md-3">
+
+                <label class=" control-label">Numéro de rue</label>
+                <input class="form-control" type="text"   [(ngModel)]="user.address.number" name="addressnumber">
+              </div>
+              <div class="col col-md-4">
+                <label class=" control-label">Rue</label>
+                <input class="form-control" type="text"   [(ngModel)]="user.address.street" name="addressstreet">
+              </div>
+
+            </div>
+          </div>
+
+
+          <div class="row g-2">
+            <div class="mb-4 form-group">
+              <label class="col-md-3 control-label">Ville</label>
+              <div class="col-md-8">
+                <input class="form-control" type="text"   [(ngModel)]="user.address.city" name="addresscity">
+              </div>
+              <label class="col-md-3 control-label">Code postal</label>
+              <div class="col-md-8">
+                <input class="form-control" type="text"   [(ngModel)]="user.address.zip_code" name="addresszip">
+              </div>
+
+            </div>
+          </div>
+
+
+
+
+
           <div class="mb-4 form-group">
             <label class="col-md-3 control-label">Change password:</label>
             <div class="col-md-8">
@@ -64,6 +94,16 @@
             <div class="col-md-8">
               <input type="button" (click)="onSubmit()" class="btn btn-primary" value="Save Changes">
               
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <div class="text-center">
+              <img src="{{user.picture}}" class="avatar img-circle" alt="avatar">
+              <h6>Upload a different photo...</h6>
+              
+              <input type="file" class="form-control" name="photo"  accept="image/*" [(ngModel)]="user.picture" name="picture" >
+    
             </div>
           </div>
         </form>
