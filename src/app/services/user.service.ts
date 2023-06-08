@@ -1,20 +1,27 @@
 import { Injectable } from '@angular/core';
-import { Address } from 'src/classes/Address';
-import { User } from 'src/classes/User';
+import {User} from "../../classes/User";
+import {Address} from "../../classes/Address";
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class UserService {
+  public logged_user?: User;
+  constructor() {}
 
-  user : User;
-
-  constructor() { 
-    this.user = this.getUser();
+  // Vérifie si l'utilisateur est connecté
+  user_logged(): boolean {
+    return this.logged_user !== undefined;
   }
 
-  getUser() : User {
-    return new User('The Rock', 'John', 'Doe', 'john.doe@gmail.com', new Date('31/05/2023'), new Address(4, 'Privet Drive', 'Little Whinging', '04242'));
+  // Définit les informations de l'utilisateur connecté
+  set_user(username: string, firstname: string, lastname: string, email: string, regdate: Date, address: Address): void {
+    this.logged_user = new User(username, firstname, lastname, email, regdate, address);
   }
 
+  // Déconnecte l'utilisateur
+  logout(): void {
+    this.logged_user = undefined;
+  }
 }

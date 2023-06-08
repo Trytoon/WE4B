@@ -18,12 +18,15 @@
           </li> -->
       </ul>
     </div>
-    <div class="navbar-nav me-auto">
+    <div class="navbar-nav me-auto" *ngIf="this.userService.user_logged() == false; else disconnectButton">
       <button class="btn btn-outline-primary me-2" routerLink="/login">Login</button>
     </div>
+    <ng-template #disconnectButton>
+      <p>{{this.userService.logged_user?.nickname}}</p>
+      <button class="btn btn-outline-danger me-2" (click)="this.userService.logout()">Disconnect</button>
+    </ng-template>
 
     <form class="d-flex" [formGroup]="searchForm" (ngSubmit)="onSearch()">
-      <input class="form-control me-2" type="search" placeholder="Rechercher" aria-label="Search" formControlName="filter">
       <button class="btn btn-success" type="submit">Search</button>
     </form>
   </div>

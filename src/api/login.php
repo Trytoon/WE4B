@@ -29,12 +29,14 @@ if ($data) {
 
     //On vérifie qu'il n'y a bien qu'un seul utilisateur qui correspond aux valeurs entrées
     if ($result and $result->num_rows == 1) {
-        $response = array("success" => "true"); //response http lue par le composant
+        $user = $result->fetch_assoc();
+	
+        $response = array("success" => "true", "user" => $user); //response http lue par le composant
     } else {
         $response = array("success" => "false");
     }
 
-    echo json_encode($response);
+    echo json_encode($response, JSON_UNESCAPED_UNICODE);
 } else {
     $response = array("success" => "false");
     echo json_encode($response);
