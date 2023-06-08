@@ -1,46 +1,70 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Offer} from "../../classes/Offer";
+import {BehaviorSubject, map, Observable} from "rxjs";
+import {HttpClient} from "@angular/common/http";
+import {Address} from "../../classes/Address";
 
 @Injectable({
   providedIn: 'root'
 })
+
+
 export class OfferService {
+  filteredOffers: BehaviorSubject<Offer[]> = new BehaviorSubject<Offer[]>([]);
 
-  offerArray : Offer[] = [];
-  constructor() {
-    this.offerArray.push(new Offer("Velo",5,172,"test","Sport","test", new Date(), true));
-    this.offerArray.push(new Offer("Tele",5,172,"test","Sport","test", new Date(), true));
-    this.offerArray.push(new Offer("Television",5,172,"test","informatique","test", new Date(), false));
-    this.offerArray.push(new Offer("Ordinateur",5,172,"test","informatique","test", new Date(), false));
-    this.offerArray.push(new Offer("velociraprto",5,172,"test","test","test", new Date(), false));
-    this.offerArray.push(new Offer("ecran",5,172,"test","informatique","test", new Date(), false));
-    this.offerArray.push(new Offer("Ordinateur",5,172,"test","test","test", new Date(), false));
-    this.offerArray.push(new Offer("Ordinateur",5,172,"test","test","test", new Date(), false));
-    this.offerArray.push(new Offer("Ordinateur",5,172,"test","test","test", new Date(), false));
-    this.offerArray.push(new Offer("Ordinateur",5,172,"test","test","test", new Date(), false));
-    this.offerArray.push(new Offer("Ordinateur",5,172,"test","test","test", new Date(), false));
-    this.offerArray.push(new Offer("Ordinateur",5,172,"test","test","test", new Date(), false));
-    this.offerArray.push(new Offer("Ordinateur",5,172,"test","test","test", new Date(), false));
-    this.offerArray.push(new Offer("Ordinateur",5,172,"test","test","test", new Date(), false));
-    this.offerArray.push(new Offer("Ordinateur",5,172,"test","test","test", new Date(), false));
-    this.offerArray.push(new Offer("Ordinateur",5,172,"test","test","test", new Date(), false));
+  constructor(public http: HttpClient) {
+    this.applyFilters(null);
   }
 
-  getOffers() : Offer[] {
-    return this.offerArray
-  }
-
-  filterOffers(filter: string): Offer[] {
-
-    if (filter === '') {
-      return this.offerArray;
-    } else {
-      return this.offerArray.filter((offer: Offer) => {
-        return (
-          offer.title.toLowerCase().includes(filter.toLowerCase()) ||
-          offer.categorie.toLowerCase().includes(filter.toLowerCase())
-        );
-      });
+  applyFilters(filter: any): void {
+    if (filter === null) {
+      filter = { filter: null };
     }
+
+    this.http.post<any>('http://localhost/WE4B/filter.php', filter).subscribe(response => {
+      if (response.success === true && response.offers) {
+        const offers = response.offers.map((offerData: any) => {
+
+          const address = new Address (
+            offerData.addressNumber,
+            offerData.addressStreet,
+            offerData.addressCity,
+            offerData.addressZipCode
+          );
+
+          return new Offer(
+            parseInt(offerData.id),
+            offerData.titre,
+            parseInt(offerData.nb_photo),
+            parseInt(offerData.prix),
+            offerData.detail,
+            offerData.categorie,
+            offerData.pseudo,
+            new Date(),
+            offerData.livrable === "1",
+            address
+          );
+        });
+        this.filteredOffers.next(offers);
+      } else {
+        this.filteredOffers.next([]);
+      }
+    });
   }
+
+  getCategories(): Observable<{ id: string, name: string }[]> {
+    return this.http.post<any>('http://localhost/WE4B/fetchCategories.php', null).pipe(
+      map(response => {
+        if (response.success === true && response.categories) {
+          return response.categories.map((category: any) => {
+            return { id: category.id, name: category.nom };
+          });
+        } else {
+          return [];
+        }
+      })
+    );
+  }
+
 }
+

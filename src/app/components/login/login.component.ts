@@ -59,7 +59,7 @@ export class LoginComponent {
                       response.user.nom,
                       response.user.email,
                       new Date(),
-                      new Address(12, "rue du chene", "Strasbourg", "67000")
+                      new Address("12", "rue du chene", "Strasbourg", "67000")
                   )
                 }
                 this.router.navigate(['/offer-list']);

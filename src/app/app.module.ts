@@ -13,6 +13,8 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {RouterLink, RouterOutlet} from "@angular/router";
 import {AppRoutingModule} from "./app-routing.module";
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { FilterComponent } from './components/filter/filter.component';
+
 
 @NgModule({
   declarations: [
@@ -23,6 +25,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
     LoginComponent,
     RegisterComponent,
     NavbarComponent,
+    FilterComponent,
   ],
   imports: [
     BrowserModule,
