@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {User} from "../../classes/User";
 import {Address} from "../../classes/Address";
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +9,7 @@ import {Address} from "../../classes/Address";
 
 export class UserService {
   public logged_user?: User;
-  constructor() {}
+  constructor(public router : Router) {}
 
   // Vérifie si l'utilisateur est connecté
   user_logged(): boolean {
@@ -23,5 +24,6 @@ export class UserService {
   // Déconnecte l'utilisateur
   logout(): void {
     this.logged_user = undefined;
+    this.router.navigate(['']);
   }
 }

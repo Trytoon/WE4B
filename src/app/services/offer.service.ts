@@ -40,7 +40,7 @@ export class OfferService {
             offerData.detail,
             offerData.categorie,
             offerData.pseudo,
-            new Date(),
+            new Date(offerData.date),
             offerData.livrable === "1",
             address
           );

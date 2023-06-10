@@ -23,8 +23,6 @@ export class LoginComponent {
       username: new FormControl('', [Validators.required, Validators.maxLength(15)]),
       password: new FormControl('', [Validators.required])
     });
-
-    this.userService.logout();
   }
 
   onSubmit() {

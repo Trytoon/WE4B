@@ -18,10 +18,9 @@
               {{offer.categorie}}<br><br>
               {{offer.seller}}<br>
               {{offer.address.city}} {{offer.address.zip_code}}<br>
-              12 Mars 2023 à 11h44
+              {{ offer.post_date | date:'dd MMMM yyyy \'à\' HH\'h\'mm' }}
             </div>
           </div>
-
         </div>
       </div>
     </div>

@@ -14,6 +14,7 @@ import {RouterLink, RouterOutlet} from "@angular/router";
 import {AppRoutingModule} from "./app-routing.module";
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { FilterComponent } from './components/filter/filter.component';
+import { OfferAddComponent } from './components/offer-add/offer-add.component';
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import { FilterComponent } from './components/filter/filter.component';
     RegisterComponent,
     NavbarComponent,
     FilterComponent,
+    OfferAddComponent,
   ],
   imports: [
     BrowserModule,
