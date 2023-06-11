@@ -10,8 +10,8 @@
 
           <p class="card-text" *ngIf="offerDetails[0].livrable == '1'; else lieu"><strong>Envoi par livraison</strong></p>
           <ng-template #lieu>
-            <p class="card-text"><strong>
-              Lieu :</strong><br>
+            <p class="card-text">
+              <strong>Lieu :</strong><br>
               {{offerDetails[0].addressNumber}} {{offerDetails[0].addressStreet}} <br>
               {{offerDetails[0].addressZipCode}}, {{offerDetails[0].addressCity}}
             </p>

@@ -25,7 +25,7 @@ export class OfferDetailsComponent {
 
     this.serviceOffer.getOfferDetails(this.offer_index).subscribe(data => {
       this.offerDetails = data;
-      console.log(this.offerDetails);
+      // console.log(this.offerDetails);
     });
   }
 }
