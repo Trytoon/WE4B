@@ -19,8 +19,8 @@ export class OfferComponent implements OnInit {
       console.log("like !");
     } else {
       // Read more about the selected offer
-      // this.router.navigate(['/offer']) old version
-      this.router.navigate(['/', 'offer-list', this.offer.index_offer])
+      // this.router.navigate(['/offer'])  // old version
+      this.router.navigate(['/', 'offer-list', this.offer.id])
     }
 
     //event.stopPropagation();
