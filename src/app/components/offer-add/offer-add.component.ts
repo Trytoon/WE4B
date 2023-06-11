@@ -1,3 +1,9 @@
+/*
+Contient un formulaire réactif et controlé par Angular
+Ajoute un produit dans le BDD et par conséquent dans la liste des produits affichés
+ */
+
+
 import {Component, Input} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
@@ -25,8 +31,7 @@ export class OfferAddComponent {
       this.router.navigate(['']);
     }
 
-
-
+    //Champs des formulaires réactifs
     this.addOfferForm = this.formBuilder.group({
       title: new FormControl('', [Validators.required, Validators.maxLength(100)]),
       description: new FormControl('', [Validators.required, Validators.maxLength(1000)]),
@@ -53,6 +58,7 @@ export class OfferAddComponent {
         this.errorMessage = "Le code postal doit être numérique!";
 
       } else {
+        //Initilisation des données à envoyer à PHP
         const data = {
           title : this.addOfferForm.get('title')?.value,
           description : this.addOfferForm.get('description')?.value,
@@ -65,6 +71,8 @@ export class OfferAddComponent {
           zip_code : this.addOfferForm.get('zip_code')?.value,
           username : this.userService.logged_user?.nickname
         }
+
+        //Requete post
         this.http.post<any>('http://localhost/WE4B/addProduct.php', data)
           .pipe(
             tap(response => {
@@ -78,6 +86,7 @@ export class OfferAddComponent {
           )
           .subscribe();
       }
+      //Gestion des messages d'erreurs
     } else {
       this.showError = true;
       if (this.addOfferForm.get('zip_code')?.hasError('minlength')) {

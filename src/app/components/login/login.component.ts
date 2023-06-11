@@ -1,3 +1,9 @@
+/*
+Contient un formulaire réactif et controlé par Angular
+Explications dans le composant Register
+ */
+
+
 import {Component, Input, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import { Router } from '@angular/router';

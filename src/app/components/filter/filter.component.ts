@@ -1,3 +1,8 @@
+/*
+Contient un formulaire réactif et controlé par Angular pour filtrer les offres en fonction du DOM
+Explications dans le composant Register
+ */
+
 import {Component} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {OfferService} from "../../services/offer.service";

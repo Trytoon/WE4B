@@ -1,3 +1,9 @@
+/*
+Module de gestion de l'utilisateur.
+Regroupe toutes les fonctions qui permettent de gerer l'authentification sur le site au niveau du client
+ */
+
+
 import { Injectable } from '@angular/core';
 import {User} from "../../classes/User";
 import {Address} from "../../classes/Address";
@@ -16,7 +22,7 @@ export class UserService {
     return this.logged_user !== undefined;
   }
 
-  // Définit les informations de l'utilisateur connecté
+  // Défini les informations de l'utilisateur connecté
   set_user(username: string, firstname: string, lastname: string, email: string, regdate: Date, address: Address): void {
     this.logged_user = new User(username, firstname, lastname, email, regdate, address);
   }

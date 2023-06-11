@@ -3,6 +3,8 @@
   <app-offer
     *ngFor="let offerVar of filteredOffers"
     [offer]="offerVar"
+    [logged_user_liked]="offerVar.liked"
   />
 </div>
+
 

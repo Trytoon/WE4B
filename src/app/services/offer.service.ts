@@ -1,8 +1,15 @@
+/*
+Module de gestion des offres.
+Regroupe toutes les fonctions qui permettent de communiquer avec le back-end poru recuperer dans infos dur des offres
+ */
+
+
 import {Injectable} from '@angular/core';
 import {Offer} from "../../classes/Offer";
-import {BehaviorSubject, map, Observable} from "rxjs";
+import {BehaviorSubject, map, Observable, of} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {Address} from "../../classes/Address";
+import {UserService} from "./user.service";
 
 @Injectable({
   providedIn: 'root'
@@ -10,17 +17,19 @@ import {Address} from "../../classes/Address";
 
 
 export class OfferService {
+
+  //Ces objects sont obeservés pour permettre la programmation réctive
   filteredOffers: BehaviorSubject<Offer[]> = new BehaviorSubject<Offer[]>([]);
 
-  constructor(public http: HttpClient) {
+  constructor(public http: HttpClient, public userService : UserService) {
     this.applyFilters(null);
   }
 
+  //Fonction d'application des filtres. Retourne le tableau des offres triées. Objet écouté par le OfferList component
   applyFilters(filter: any): void {
     if (filter === null) {
       filter = { filter: null };
     }
-
     this.http.post<any>('http://localhost/WE4B/filter.php', filter).subscribe(response => {
       if (response.success === true && response.offers) {
         const offers = response.offers.map((offerData: any) => {
@@ -42,6 +51,7 @@ export class OfferService {
             offerData.pseudo,
             new Date(offerData.date),
             offerData.livrable === "1",
+            false,
             address
           );
         });
@@ -52,6 +62,8 @@ export class OfferService {
     });
   }
 
+  //Interroge la base de données et retourne une liste de toutes les catégories existantes sur le site.
+  //On exploite cette liste dans des listes déroulantes ensuite
   getCategories(): Observable<{ id: string, name: string }[]> {
     return this.http.post<any>('http://localhost/WE4B/fetchCategories.php', null).pipe(
       map(response => {
@@ -66,5 +78,28 @@ export class OfferService {
     );
   }
 
+
+  //Pour un utilisateur donné, interroge la base de données et recupère tous les produits likés par l'utilisateur
+  //Ecouté dans OfferComponentList puis réinjecté vers chaque produit
+  getUserLikeStatut(): Observable<string[]> {
+    if (this.userService.user_logged()) {
+      const data = {
+        username: this.userService.logged_user?.nickname,
+      };
+
+      return this.http.post<any>('http://localhost/WE4B/userLikeStatut.php', data)
+        .pipe(
+          map(response => {
+            if (response.success === "true" && response.offreIds) {
+              return response.offreIds;
+            } else {
+              return [];
+            }
+          })
+        );
+    } else {
+      return of([]);
+    }
+  }
 }
 

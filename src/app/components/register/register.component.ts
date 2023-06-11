@@ -1,3 +1,7 @@
+/*
+Contient un formulaire réactif et controlé par Angular
+ */
+
 import {Component, Input} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
@@ -16,6 +20,7 @@ export class RegisterComponent {
 
   constructor(private formBuilder: FormBuilder, private router: Router, private http: HttpClient) {
 
+    //Creation du formulaire avec les validators poru controler les données lors de la soumission
     this.registerForm = this.formBuilder.group({
       username: new FormControl('', [Validators.required, Validators.maxLength(15)]),
       email: new FormControl('', [Validators.required, Validators.email]),
@@ -39,6 +44,7 @@ export class RegisterComponent {
         const password = passwordControl.value;
         const password2 = password2Control.value;
 
+        //Les données qu'on envoie au backend sont dans l'object "data"
         if (password === password2) {
           const data = {
             username: username,
@@ -46,6 +52,7 @@ export class RegisterComponent {
             password: password
           };
 
+          //Requete POST PHP
           this.http.post<any>('http://localhost/WE4B/register.php', data)
             .pipe(
               tap(response => {
