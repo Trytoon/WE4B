@@ -12,18 +12,20 @@ import { User } from 'src/classes/User';
   styleUrls: ['./offer-details.component.css']
 })
 export class OfferDetailsComponent {
-    offer_index : number;
-    offer : Offer;
-    seller : User;
+  offer_index : number;
+  offerDetails : any[] = [];
 
-    // constructor(serviceOffer : OfferDetailService, serviceUser : UserService) {
-    //   this.offer = serviceOffer.getOffer();
-    //   this.seller = serviceUser.getUser(); // il faudra recuperer l'utilisateur qui a poste l'offre
-    // }
+  // constructor(serviceOffer : OfferDetailService, serviceUser : UserService) {
+  //   this.offer = serviceOffer.getOffer();
+  //   this.seller = serviceUser.getUser(); // il faudra recuperer l'utilisateur qui a poste l'offre
+  // }
 
-    constructor(private activatedRoute: ActivatedRoute, private serviceOffer: OfferService, serviceUser : UserService) {
-      this.offer_index = parseInt(this.activatedRoute.snapshot.paramMap.get('index') || '0');
-      this.offer = serviceOffer.getOfferByIndex(this.offer_index-1);
-      this.seller = serviceUser.getUser(); // il faudra recuperer l'utilisateur qui a poste l'offre
-    }
+  constructor(private activatedRoute: ActivatedRoute, private serviceOffer: OfferService, serviceUser : UserService) {
+    this.offer_index = parseInt(this.activatedRoute.snapshot.paramMap.get('index') || '0');
+
+    this.serviceOffer.getOfferDetails(this.offer_index).subscribe(data => {
+      this.offerDetails = data;
+      console.log(this.offerDetails);
+    });
+  }
 }

@@ -71,5 +71,16 @@ export class OfferService {
     );
   }
 
+  getOfferDetails(id: number): Observable<any[]> {
+    return this.http.post<any>('http://localhost/WE4B/fetchOffer.php', { id }).pipe(
+      map(response => {
+        if (response.success === true && response.offerdetail) {
+          return [response.offerdetail];
+        } else {
+          return [];
+        }
+      })
+    );
+  }
 }
 
