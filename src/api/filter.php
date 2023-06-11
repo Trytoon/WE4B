@@ -17,7 +17,7 @@ $request_body = file_get_contents('php://input');
 $data = json_decode($request_body);
 
 if ($data && property_exists($data, 'productName')) {
-    $query = "SELECT OFR.*, USR.pseudo, ADR.*, CAT.id, CAT.nom as `category_name` FROM `offre` OFR
+    $query = "SELECT OFR.*, OFR.ID as `offer_id`, USR.pseudo, ADR.*, CAT.id, CAT.nom as `category_name` FROM `offre` OFR
               INNER JOIN utilisateur USR ON OFR.id_utilisateur = USR.id
               INNER JOIN adresse ADR ON OFR.adresse = ADR.id
               INNER JOIN categorie CAT on CAT.id = OFR.categorie
@@ -63,7 +63,7 @@ if ($data && property_exists($data, 'productName')) {
     $query = rtrim($query, ' AND ');
 
 } else {
-    $query = "SELECT OFR.*, USR.pseudo, ADR.*, CAT.id, CAT.nom as `category_name` FROM `offre` OFR
+    $query = "SELECT OFR.*, OFR.ID as `offer_id`, USR.pseudo, ADR.*, CAT.id, CAT.nom as `category_name` FROM `offre` OFR
               INNER JOIN utilisateur USR ON OFR.id_utilisateur = USR.id
               INNER JOIN adresse ADR ON OFR.adresse = ADR.id
               INNER JOIN categorie CAT on CAT.id = OFR.categorie
@@ -81,7 +81,7 @@ if ($result) {
 	// Parcourir les résultats de la requête et ajouter chaque offre à la liste
 	while ($row = $result->fetch_assoc()) {
 		$offer = array(
-			"id" => $row['id'],
+			"id" => $row['offer_id'],
 			"titre" => $row['titre'],
 			"nb_photo" => $row['nb_photo'],
 			"prix" => $row['prix'],
