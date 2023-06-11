@@ -26,6 +26,7 @@ if ($data) {
     $username = mysqli_real_escape_string($conn, $username);
 	$email = mysqli_real_escape_string($conn, $email);
     $password = mysqli_real_escape_string($conn, $password);
+	$password = password_hash($password, PASSWORD_BCRYPT);
 
     $query = "SELECT * FROM utilisateur WHERE pseudo='" .$username. "' OR email='" .$email. "'";
     $result = $conn->query($query);
