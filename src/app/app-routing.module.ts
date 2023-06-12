@@ -7,6 +7,7 @@ import {OfferListComponent} from "./components/offer-list/offer-list.component";
 import {NavbarComponent} from "./components/navbar/navbar.component";
 import {OfferAddComponent} from "./components/offer-add/offer-add.component";
 import {OfferDetailsComponent} from "./components/offer-details/offer-details.component";
+import {ProfilComponent} from "./components/profil/profil.component";
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -15,7 +16,7 @@ const routes: Routes = [
   { path: 'add-offer', component: OfferAddComponent},
   { path: 'offer-list/:index', component: OfferDetailsComponent},
   { path: 'user-profile/:page', component: OfferListComponent},
-  { path: 'user-profile', component: NavbarComponent}
+  { path: 'user-profile', component: ProfilComponent}
 ];
 
 @NgModule({

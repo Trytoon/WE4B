@@ -20,11 +20,11 @@ import {OfferService} from "../../services/offer.service";
 export class OfferComponent implements OnInit {
   @Input() offer!: Offer;
   @Input() logged_user_liked! : boolean;
+
+  @Input() canBeRemovedFromList! : boolean; //Pour savoir s'il peut disparaitre une fois à l'ecran. Pour disliker un produit
   constructor(public userService: UserService, public router: Router, public http: HttpClient, public offerService : OfferService) {}
 
-  ngOnInit(): void {
-    console.log(this.userService.logged_user)
-  }
+  ngOnInit(): void {}
 
   like(): void {
     if (this.userService.user_logged()) {
@@ -68,6 +68,13 @@ export class OfferComponent implements OnInit {
     if (target.tagName !== 'BUTTON') {
       this.router.navigate(['/', 'offer-list', this.offer.id])
     }
+  }
+
+  removeFromList() : void {
+    this.offer.liked = false;
+    const currentOffers = this.offerService.filteredOffers.getValue();
+    const updatedOffers = currentOffers.filter(offer => offer.id !== this.offer.id);
+    this.offerService.filteredOffers.next(updatedOffers);
   }
 }
 

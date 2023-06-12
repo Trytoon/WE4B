@@ -9,6 +9,10 @@
       </ng-template>
     </div>
 
+    <div class="navbar-nav mx-auto">
+      <button class="btn btn-outline-primary me-2" routerLink="/">Accueil</button>
+    </div>
+
     <div class="navbar-nav ms-auto" *ngIf="userService.user_logged()">
       <button class="btn btn-outline-primary me-2" routerLink="/add-offer">Ajouter un produit</button>
       <button class="btn btn-outline-primary me-2" routerLink="/user-profile">Consulter mes informations</button>

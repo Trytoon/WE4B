@@ -16,6 +16,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { FilterComponent } from './components/filter/filter.component';
 import { OfferAddComponent } from './components/offer-add/offer-add.component';
 import { OfferDetailsComponent } from './components/offer-details/offer-details.component';
+import { ProfilComponent } from './components/profil/profil.component';
 
 
 @NgModule({
@@ -30,6 +31,7 @@ import { OfferDetailsComponent } from './components/offer-details/offer-details.
     FilterComponent,
     OfferAddComponent,
     OfferDetailsComponent,
+    ProfilComponent,
   ],
   imports: [
     BrowserModule,

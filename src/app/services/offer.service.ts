@@ -27,6 +27,7 @@ export class OfferService {
 
   //Fonction d'application des filtres. Retourne le tableau des offres triées. Objet écouté par le OfferList component
   applyFilters(filter: any): void {
+    this.filteredOffers.next([]);
     if (filter === null) {
       filter = { filter: null };
     }
@@ -53,7 +54,7 @@ export class OfferService {
             offerData.pseudo,
             new Date(offerData.date),
             offerData.livrable === "1",
-            false,
+            offerData.liked,
             address
           );
         });
@@ -105,7 +106,7 @@ export class OfferService {
   }
 
   getOfferDetails(id: number): Observable<any[]> {
-    return this.http.post<any>('http://localhost/WE4B/fetchOffer.php', { id }).pipe(
+    return this.http.post<any>('http://localhost/WE4B/fetchOffer.php', {id}).pipe(
       map(response => {
         if (response.success === true && response.offerdetail) {
           return [response.offerdetail];

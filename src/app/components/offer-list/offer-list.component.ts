@@ -1,7 +1,8 @@
-import {Component, OnInit} from '@angular/core';
-import {Offer} from "../../../classes/Offer";
-import {OfferService} from "../../services/offer.service";
-import {ActivatedRoute, Router} from "@angular/router";
+import { Component, OnInit } from '@angular/core';
+import { Offer } from "../../../classes/Offer";
+import { OfferService } from "../../services/offer.service";
+import { ActivatedRoute, Router } from "@angular/router";
+import { UserService } from "../../services/user.service";
 
 @Component({
   selector: 'app-offer-list',
@@ -9,28 +10,72 @@ import {ActivatedRoute, Router} from "@angular/router";
   styleUrls: ['./offer-list.component.css']
 })
 export class OfferListComponent implements OnInit {
-  filteredOffers: Offer[] = [];
-  displayFilterOption : boolean = false;
+  filteredOffers: Offer[] = []; //Les offres filtrées en temps réél grace à OfferService
 
-  //Pour réduire les requetes vers la BDD, on s'abonne en temps réél à ses changements:
-  // 1) Recuperer via le backend toute la liste des offres selon le filtre
-  // 2) Pour chaque offre filtrée, il recupere si le produit est liké ou pas par l'utilisateur connecté
-  // 3) Il initialise l'offre et met à jour la propriété "liked"
-  // 4) Cette propriété like est injectée de la liste d'offre vers les offres individuelles
-  constructor(public service: OfferService, public router : Router, private activatedRoute: ActivatedRoute){
+  textDisplay: string = ""; //Le titre à afficher
+  displayFilterOption: boolean = false; //Pour afficher ou nom le formulaire de filtrage
+  readyToBeDisplayed: boolean = false; //Pour gerer l'affichage. Une fois seulement que toutes les données ont été envoyées, ca s'affiche à l'écran
+  offerCanBeRemoved: boolean = false; // Autorise ou non l'offre à s'enlever de la liste --> Utilisé pour disliker un produit réactivement
 
+  constructor(
+    public service: OfferService,
+    public router: Router,
+    private activatedRoute: ActivatedRoute,
+    private userService: UserService
+  ) {}
+
+  ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe(params => {
       const page = params.get('page');
 
+      //Page des likes de l'utilisateur
       if (page === 'likes') {
-        console.log('likes');
+        this.offerCanBeRemoved = true;
+        if (!this.userService.user_logged()) {
+          this.router.navigate(['']);
+        } else {
+          const data = {
+            likes: true,
+            username: this.userService.logged_user?.nickname,
+          };
+
+          this.service.applyFilters(data);
+
+          this.service.filteredOffers.subscribe(offers => {
+            this.filteredOffers = offers;
+            if (this.filteredOffers.length === 0) {
+              this.textDisplay = "Vous n'avez liké aucune offre";
+            } else {
+              this.textDisplay = "Vos offres likées";
+            }
+            this.readyToBeDisplayed = true;
+          });
+        }
+
+        //Page des offres de l'utilisateur
       } else if (page === 'myoffers') {
-        console.log('myoffers');
-        // Affichage de la liste des offres déposées
-        // par l'utilisateur
+        if (!this.userService.user_logged()) {
+          this.router.navigate(['']);
+        } else {
+          const data = {
+            myoffers: true,
+            username: this.userService.logged_user?.nickname,
+          };
+
+          this.service.applyFilters(data);
+
+          this.service.filteredOffers.subscribe(offers => {
+            this.filteredOffers = offers;
+            if (this.filteredOffers.length === 0) {
+              this.textDisplay = "Vous n'avez publié aucune offre";
+            } else {
+              this.textDisplay = "Vos offres publiées";
+            }
+            this.readyToBeDisplayed = true;
+          });
+        }
       } else {
         this.displayFilterOption = true;
-        // Affichage de la liste des offres dans la recherche principale
         this.service.filteredOffers.subscribe(offers => {
           this.filteredOffers = offers;
           this.service.getUserLikeStatut().subscribe(offreIds => {
@@ -38,14 +83,10 @@ export class OfferListComponent implements OnInit {
               ...offer,
               liked: offreIds.includes(offer.id.toString())
             }));
+            this.readyToBeDisplayed = true;
           });
         });
       }
     });
   }
-
-  ngOnInit(): void {
-
-  }
 }
-
