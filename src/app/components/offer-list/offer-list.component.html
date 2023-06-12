@@ -1,5 +1,8 @@
 <div class="container">
-  <app-filter></app-filter>
+
+  <span *ngIf="displayFilterOption">
+    <app-filter></app-filter>
+  </span>
   <app-offer
     *ngFor="let offerVar of filteredOffers"
     [offer]="offerVar"

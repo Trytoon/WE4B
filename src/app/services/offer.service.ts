@@ -34,6 +34,7 @@ export class OfferService {
       if (response.success === true && response.offers) {
         const offers = response.offers.map((offerData: any) => {
 
+          //Adresse de l'utilisateur
           const address = new Address (
             offerData.addressNumber,
             offerData.addressStreet,
@@ -41,6 +42,7 @@ export class OfferService {
             offerData.addressZipCode
           );
 
+          //Instanciation de l'offre avec l'adresse précédente
           return new Offer(
             parseInt(offerData.id),
             offerData.titre,
@@ -101,5 +103,19 @@ export class OfferService {
       return of([]);
     }
   }
+
+  getOfferDetails(id: number): Observable<any[]> {
+    return this.http.post<any>('http://localhost/WE4B/fetchOffer.php', { id }).pipe(
+      map(response => {
+        if (response.success === true && response.offerdetail) {
+          return [response.offerdetail];
+        } else {
+          return [];
+        }
+      })
+    );
+  }
 }
+
+
 

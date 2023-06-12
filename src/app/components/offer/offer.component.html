@@ -1,14 +1,16 @@
-<div class="d-flex justify-content-center">
+<div class="d-flex justify-content-center" (click)="onClick($event)">
   <div class="offer" style="width: 60%">
     <div class="card">
       <div class="row no-gutters">
         <div class="col-md-4">
           <img src="https://i.pinimg.com/originals/5b/f6/0a/5bf60a85a633b2add2911175ea8c4f4d.jpg" class="card-img" alt="Image">
-          <div *ngIf="this.userService.user_logged() && this.logged_user_liked == false">
-            <button class="btn btn-primary btn-like" (click)="like()">Like</button>
-          </div>
-          <div *ngIf="this.userService.user_logged() && this.logged_user_liked">
-            <button class="btn btn-danger btn-like" (click)="dislike()">Dislike</button>
+          <div *ngIf="this.userService.user_logged() && this.userService.logged_user?.nickname != offer.seller">
+            <div *ngIf="this.userService.user_logged() && this.logged_user_liked == false">
+              <button class="btn btn-primary btn-like" (click)="like()">Like</button>
+            </div>
+            <div *ngIf="this.userService.user_logged() && this.logged_user_liked">
+              <button class="btn btn-danger btn-like" (click)="dislike()">Dislike</button>
+            </div>
           </div>
         </div>
         <div class="col-md-8">

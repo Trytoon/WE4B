@@ -22,7 +22,9 @@ export class OfferComponent implements OnInit {
   @Input() logged_user_liked! : boolean;
   constructor(public userService: UserService, public router: Router, public http: HttpClient, public offerService : OfferService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log(this.userService.logged_user)
+  }
 
   like(): void {
     if (this.userService.user_logged()) {
@@ -54,6 +56,17 @@ export class OfferComponent implements OnInit {
             this.logged_user_liked = false;
           }
         });
+    }
+  }
+
+  //Pour afficher les details d'un produit
+  onClick(event : Event) : void {
+
+    //Il faut verifie si l'utilisateur a cliqué sur le bouton sur la carte ou sur la carte elle même.
+    //Le bouton like / dislike ne soit pas activer la route !
+    const target = event.target as HTMLElement;
+    if (target.tagName !== 'BUTTON') {
+      this.router.navigate(['/', 'offer-list', this.offer.id])
     }
   }
 }

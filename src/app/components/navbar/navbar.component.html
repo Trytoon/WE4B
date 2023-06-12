@@ -2,10 +2,10 @@
   <div class="container-fluid">
     <div class="navbar-nav">
       <div class="me-auto" *ngIf="!userService.user_logged(); else disconnectButton">
-        <button class="btn btn-outline-primary me-2" routerLink="/login">Login</button>
+        <button class="btn btn-outline-primary me-2" routerLink="/login">Se connecter</button>
       </div>
       <ng-template #disconnectButton>
-        <button class="btn btn-outline-danger me-2" (click)="userService.logout()">Disconnect</button>
+        <button class="btn btn-outline-danger me-2" (click)="userService.logout()">Se deconnecter de {{this.userService.logged_user?.nickname}}</button>
       </ng-template>
     </div>
 

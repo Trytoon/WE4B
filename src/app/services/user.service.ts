@@ -1,6 +1,8 @@
 /*
 Module de gestion de l'utilisateur.
 Regroupe toutes les fonctions qui permettent de gerer l'authentification sur le site au niveau du client
+Utilise le LocalStorage définit par Angular pour permettre de rester authentifié même en rechargeant la page
+Equivalent de la serialisation dans Java
  */
 
 
@@ -15,21 +17,50 @@ import {Router} from "@angular/router";
 
 export class UserService {
   public logged_user?: User;
-  constructor(public router : Router) {}
+  private loggedUserKey = 'loggedUser'
+
+  // Charge les données de l'utilisateur connecté lors de l'initialisation du service
+  constructor(public router: Router) {
+    this.loadLoggedUser();
+  }
 
   // Vérifie si l'utilisateur est connecté
   user_logged(): boolean {
     return this.logged_user !== undefined;
   }
 
-  // Défini les informations de l'utilisateur connecté
+  // Définit les informations de l'utilisateur connecté
   set_user(username: string, firstname: string, lastname: string, email: string, regdate: Date, address: Address): void {
-    this.logged_user = new User(username, firstname, lastname, email, regdate, address);
+    const user = new User(username, firstname, lastname, email, regdate, address);
+    this.logged_user = user;
+    this.saveLoggedUser();
   }
 
   // Déconnecte l'utilisateur
   logout(): void {
     this.logged_user = undefined;
+    this.removeLoggedUser(); // Supprime les données de localStorage
     this.router.navigate(['']);
+  }
+
+  // Charge les données de l'utilisateur connecté depuis localStorage
+  private loadLoggedUser(): void {
+    const userJson = localStorage.getItem(this.loggedUserKey);
+    if (userJson) {
+      this.logged_user = JSON.parse(userJson);
+    }
+  }
+
+  // Enregistre les données de l'utilisateur connecté dans localStorage
+  private saveLoggedUser(): void {
+    if (this.logged_user) {
+      const userJson = JSON.stringify(this.logged_user);
+      localStorage.setItem(this.loggedUserKey, userJson);
+    }
+  }
+
+  // Supprime les données de l'utilisateur connecté de localStorage
+  private removeLoggedUser(): void {
+    localStorage.removeItem(this.loggedUserKey);
   }
 }

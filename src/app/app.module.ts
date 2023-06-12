@@ -15,6 +15,7 @@ import {AppRoutingModule} from "./app-routing.module";
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { FilterComponent } from './components/filter/filter.component';
 import { OfferAddComponent } from './components/offer-add/offer-add.component';
+import { OfferDetailsComponent } from './components/offer-details/offer-details.component';
 
 
 @NgModule({
@@ -28,6 +29,7 @@ import { OfferAddComponent } from './components/offer-add/offer-add.component';
     NavbarComponent,
     FilterComponent,
     OfferAddComponent,
+    OfferDetailsComponent,
   ],
   imports: [
     BrowserModule,
