@@ -12,9 +12,6 @@
     <div class="navbar-nav mx-auto">
       <button class="btn btn-outline-primary me-2" routerLink="/">Accueil</button>
     </div>
-    <div class="navbar-nav me-auto" *ngIf="this.userService.user_logged() == false; else disconnectButton">
-      <button class="btn btn-outline-primary me-2" routerLink="/login">Login</button>
-    </div>
 
     <form class="d-flex" [formGroup]="searchForm" (ngSubmit)="onSearch()">
       <button class="btn btn-success" type="submit">Search</button>

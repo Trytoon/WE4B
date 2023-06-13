@@ -40,6 +40,7 @@ export class OfferService {
 
           //Adresse de l'utilisateur
           const address = new Address (
+            offerData.addressId,
             offerData.addressNumber,
             offerData.addressStreet,
             offerData.addressCity,
