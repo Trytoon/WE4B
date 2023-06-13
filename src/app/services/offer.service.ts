@@ -82,5 +82,18 @@ export class OfferService {
       })
     );
   }
+
+  getOfferPictures(offer : Offer): string[] {
+    // const offerWithId : Offer | undefined = this.offerArray.find(offer => offer.id === idOffer);
+    let pathsPictures: string[] = []
+    
+    if (offer) {
+      for (let j : number = 1; j <= (offer.nb_pictures as number); j++) {
+        console.log('adding path')
+        pathsPictures.push(`src/assets/offerpictures/offer${offer.nb_pictures}/${j}.jpg`)
+      }
+    }
+    return pathsPictures
+  }
 }
 

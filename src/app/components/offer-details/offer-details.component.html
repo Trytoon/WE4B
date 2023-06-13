@@ -2,26 +2,30 @@
   <div class="row">
     <div class="col-lg-8 offset-lg-2">
       <div class="card">
+        <div class="card-header">
+          <img *ngFor="let picturePath of pathsPictures" [src]="picturePath" alt="{{picturePath}}">
+          
+        </div>
         <img src="https://i.pinimg.com/originals/5b/f6/0a/5bf60a85a633b2add2911175ea8c4f4d.jpg" class="card-img" alt="Image">
         <div class="card-body">
-          <h4 class="card-title">{{offerDetails[0].offerTitle}}</h4>
-          <p class="card-text"><strong>Description :</strong> {{offerDetails[0].description}}</p>
-          <p class="card-text"><strong>Prix :</strong> {{offerDetails[0].price}} €</p>
+          <h4 class="card-title">{{offerDetails.offer.title}}</h4>
+          <p class="card-text"><strong>Description :</strong> {{offerDetails.offer.description}}</p>
+          <p class="card-text"><strong>Prix :</strong> {{offerDetails.offer.price}} €</p>
 
-          <p class="card-text" *ngIf="offerDetails[0].livrable == '1'; else lieu"><strong>Envoi par livraison</strong></p>
+          <p class="card-text" *ngIf="offerDetails.offer.shippable == true; else lieu"><strong>Envoi par livraison</strong></p>
           <ng-template #lieu>
             <p class="card-text">
               <strong>Lieu :</strong><br>
-              {{offerDetails[0].addressNumber}} {{offerDetails[0].addressStreet}} <br>
-              {{offerDetails[0].addressZipCode}}, {{offerDetails[0].addressCity}}
+              {{offerDetails.offer.address.number}} {{offerDetails.offer.address.street}} <br>
+              {{offerDetails.offer.address.zip_code}}, {{offerDetails.offer.address.city}}
             </p>
           </ng-template>
-          <p class="card-text"><strong>Date de publication :</strong> {{offerDetails[0].offerDate | date : 'dd/MM/YYYY'}}</p>
+          <p class="card-text"><strong>Date de publication :</strong> {{offerDetails.offer.post_date | date : 'dd/MM/YYYY'}}</p>
           <hr>
           <h6>Contact vendeur :</h6>
-          <p><strong>Pseudo : </strong>{{offerDetails[0].sellerPseudo}}</p>
-          <p><strong>Nom : </strong>{{offerDetails[0].sellerFirstName | titlecase}} {{offerDetails[0].sellerLastName | uppercase}}</p>
-          <p><strong>Email : </strong>{{offerDetails[0].sellerEmail}}</p>
+          <p><strong>Pseudo : </strong>{{offerDetails.offer.seller}}</p>
+          <p><strong>Nom : </strong>{{offerDetails.seller.first_name | titlecase}} {{offerDetails.seller.last_name | uppercase}}</p>
+          <p><strong>Email : </strong>{{offerDetails.seller.email}}</p>
         </div>
       </div>
     </div>
