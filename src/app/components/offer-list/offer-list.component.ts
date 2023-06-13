@@ -75,16 +75,17 @@ export class OfferListComponent implements OnInit {
           });
         }
       } else {
-        this.displayFilterOption = true;
+        //Liste de toutes les offres
+
+        const data = {
+          username: this.userService.logged_user?.nickname,
+        };
+
+        this.service.applyFilters(data);
+
         this.service.filteredOffers.subscribe(offers => {
           this.filteredOffers = offers;
-          this.service.getUserLikeStatut().subscribe(offreIds => {
-            this.filteredOffers = this.filteredOffers.map(offer => ({
-              ...offer,
-              liked: offreIds.includes(offer.id.toString())
-            }));
-            this.readyToBeDisplayed = true;
-          });
+          this.readyToBeDisplayed = true;
         });
       }
     });

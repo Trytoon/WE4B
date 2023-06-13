@@ -21,13 +21,11 @@ export class OfferService {
   //Ces objects sont obeservés pour permettre la programmation réctive
   filteredOffers: BehaviorSubject<Offer[]> = new BehaviorSubject<Offer[]>([]);
 
-  constructor(public http: HttpClient, public userService : UserService) {
-    this.applyFilters(null);
-  }
+  constructor(public http: HttpClient, public userService : UserService) {}
 
   //Fonction d'application des filtres. Retourne le tableau des offres triées. Objet écouté par le OfferList component
   applyFilters(filter: any): void {
-    this.filteredOffers.next([]);
+    //this.filteredOffers.next([]);
     if (filter === null) {
       filter = { filter: null };
     }
@@ -54,7 +52,7 @@ export class OfferService {
             offerData.pseudo,
             new Date(offerData.date),
             offerData.livrable === "1",
-            offerData.liked,
+            offerData.liked === "1",
             address
           );
         });
