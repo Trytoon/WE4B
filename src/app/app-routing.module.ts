@@ -11,14 +11,11 @@ import { UserComponent } from './components/user/user.component';
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'offer-list', component: OfferListComponent},
-  { path: '', component: NavbarComponent},
-  {path:'profil',component:ProfilComponent},
-  {path:'mesinformations',component:UserComponent},
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
-  { path: 'offer-list', component: OfferListComponent},
-  { path: '', component: NavbarComponent}
+  { path: 'offer-list', component: OfferListComponent },
+  { path: '', component: NavbarComponent },
+  { path:'profil',component:ProfilComponent },
+  { path:'mesinformations',component:UserComponent },
+
 
 ];
 
