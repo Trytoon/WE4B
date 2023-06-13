@@ -33,32 +33,16 @@ if ($data) {
     if ($result and $result->num_rows > 0) {
         $response = array("success" => "false"); //response http lue par le composant
     } else {
-        $query = "INSERT INTO `utilisateur`(`pseudo`, `password`, `email` ) VALUES ('$username', '$password', '$email')";
+        $query = "INSERT INTO `utilisateur`(`pseudo`, `password`, `email`) VALUES ('$username', '$password', '$email')";
         $result = $conn->query($query);
 
-
         if ($result) {
-            $querycreateadress="INSERT INTO adresse (numero,nom_rue,nom_ville,cp) VALUES (NULL,NULL,NULL,NULL)";
-            $result2 = $conn->query($querycreateadress);
-    
-            $adressID = $conn->insert_id;
-    
-            $queryupdateadress = "UPDATE utilisateur SET adresse=" . $adressID . " WHERE pseudo = '" . $username . "' ";
-            $result=$conn->query($queryupdateadress);
-    
-            if ($result) {
-                $response = array("success" => "true");
-            } else {
-                $response = array("success" => "false"); //response http lue par le composant
-            }
+            $response = array("success" => "true");
         } else {
-            $response = array("success" => "false"); 
-        }  
-    } 
-
-    
+            $response = array("success" => "false");
+        }
+    }
     echo json_encode($response);
-
 } else {
     $response = array("success" => "false");
     echo json_encode($response);

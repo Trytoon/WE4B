@@ -1,10 +1,10 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {tap} from "rxjs";
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { tap } from "rxjs";
 import { UserService } from 'src/app/services/user.service';
-import {Address} from "../../../classes/Address";
+import { Address } from "../../../classes/Address";
 
 @Component({
   selector: 'app-login',
@@ -94,4 +94,5 @@ export class LoginComponent {
       this.errorMessage = "Veuillez remplir le formulaire !";
     }
   }
+    
 }

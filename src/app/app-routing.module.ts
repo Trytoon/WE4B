@@ -15,11 +15,22 @@ const routes: Routes = [
   { path: '', component: NavbarComponent},
   {path:'profil',component:ProfilComponent},
   {path:'mesinformations',component:UserComponent},
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
+  { path: 'offer-list', component: OfferListComponent},
+  { path: '', component: NavbarComponent}
 
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  declarations: [],
+  imports: [
+    RouterModule.forRoot(routes)
+  ],
+  exports:[
+    RouterModule
+  ],
+
+
 })
 export class AppRoutingModule { }
