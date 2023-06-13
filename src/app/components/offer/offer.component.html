@@ -1,26 +1,37 @@
-<div class="d-flex justify-content-center">
+<div class="d-flex justify-content-center" (click)="onClick($event)">
   <div class="offer" style="width: 60%">
     <div class="card">
       <div class="row no-gutters">
         <div class="col-md-4">
           <img src="https://i.pinimg.com/originals/5b/f6/0a/5bf60a85a633b2add2911175ea8c4f4d.jpg" class="card-img" alt="Image">
+          <div *ngIf="this.userService.user_logged() && this.userService.logged_user?.nickname != offer.seller">
+            <div *ngIf="this.userService.user_logged() && this.logged_user_liked == false">
+              <button class="btn btn-primary btn-like" (click)="like()">Like</button>
+            </div>
+            <div *ngIf="this.userService.user_logged() && this.logged_user_liked && !canBeRemovedFromList">
+              <button class="btn btn-danger btn-like" (click)="dislike()">Dislike</button>
+            </div>
+            <div *ngIf="this.userService.user_logged() && this.logged_user_liked && canBeRemovedFromList">
+              <button class="btn btn-danger btn-like" (click)="dislike(); removeFromList()">Dislike</button>
+            </div>
+          </div>
         </div>
         <div class="col-md-8">
-          <div class="card-body d-flex flex-column justify-content-between " style="height: 275px;"><!--espacement correctement géré entre les deux sous divisions-->
-            <div><!--sous division 1 alignée sur le haut du contenu de la carte-->
+          <div class="card-body d-flex flex-column justify-content-between" style="height: 275px;">
+            <div>
               <h5 class="card-title">{{offer.title}}</h5>
               <p class="card-text">{{offer.price}}€</p>
               <div *ngIf="offer.shippable">
                 <p class="delivery-option">Livraison Possible</p>
               </div>
             </div>
-            <div class = "mt-auto offer-info"><!--sous division 2 alignée sur le bas du contenu de la carte-->
-                {{offer.categorie}}<br>
-                Belfort 90000<br>
-                12 Mars 2023 à 11h44
+            <div class="mt-auto offer-info">
+              {{offer.categorie}}<br><br>
+              {{offer.seller}}<br>
+              {{offer.address.city}} {{offer.address.zip_code}}<br>
+              {{ offer.post_date | date:'dd MMMM yyyy \'à\' HH\'h\'mm' }}
             </div>
           </div>
-
         </div>
       </div>
     </div>

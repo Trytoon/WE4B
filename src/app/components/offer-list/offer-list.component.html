@@ -1,9 +1,17 @@
-<app-navbar></app-navbar>
 <div class="container">
-  <app-offer
-    *ngFor="let offerVar of filteredOffers"
-    [offer]="offerVar"
-  />
-</div>
-<app-footer></app-footer>
 
+  <div *ngIf="readyToBeDisplayed">
+    <div *ngIf="displayFilterOption">
+      <app-filter></app-filter>
+    </div>
+    <div class="d-flex justify-content-center align-items-center" *ngIf="textDisplay.length > 0">
+      <h1 class="text-center">{{textDisplay}}</h1>
+    </div>
+    <app-offer
+      *ngFor="let offerVar of filteredOffers"
+      [offer]="offerVar"
+      [logged_user_liked]="offerVar.liked"
+      [canBeRemovedFromList]="offerCanBeRemoved"
+    />
+  </div>
+</div>

@@ -11,25 +11,23 @@ include("./database.php");
 global $conn;
 ConnectDatabase();
 
-
-//Par defaut, Angular envoie un array json au serveur. Pour lire ces données, il faut décoder le json
+// Par défaut, Angular envoie un tableau JSON au serveur. Pour lire ces données, il faut décoder le JSON
 $request_body = file_get_contents('php://input');
 $data = json_decode($request_body);
 
 if ($data) {
-  //On accède et on traite les données envoyées par angular au php
-  $username = $data->username;
-  $password = $data->password;
+    // On accède et on traite les données envoyées par Angular au PHP
+    $username = $data->username;
+    $password = $data->password;
 
-  $username = mysqli_real_escape_string($conn, $username);
-  $password = mysqli_real_escape_string($conn, $password);
+    $username = mysqli_real_escape_string($conn, $username);
 
-  $query = "SELECT * FROM utilisateur WHERE pseudo='" .$username. "' AND password='" .$password. "'";
-  $result = $conn->query($query);
+    $query = "SELECT * FROM utilisateur WHERE pseudo='" . $username . "'";
+    $result = $conn->query($query);
 
-  //On vérifie qu'il n'y a bien qu'un seul utilisateur qui correspond aux valeurs entrées
-  if ($result and $result->num_rows == 1) {
-    $user = $result->fetch_assoc();
+    // On vérifie qu'il y a bien un utilisateur qui correspond au pseudo
+    if ($result && $result->num_rows == 1) {
+        $user = $result->fetch_assoc();
 
     if (isset($user) && isset($user['adresse'])) {
       $query = "SELECT * FROM adresse WHERE id='" . $user["adresse"] . "'";
@@ -49,10 +47,10 @@ if ($data) {
     $response = array("success" => "false");
   }
 
-  echo json_encode($response, JSON_UNESCAPED_UNICODE);
+    echo json_encode($response, JSON_UNESCAPED_UNICODE);
 } else {
-  $response = array("success" => "false");
-  echo json_encode($response);
+    $response = array("success" => "false");
+    echo json_encode($response);
 }
 
 $conn->close();

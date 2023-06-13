@@ -16,16 +16,9 @@ export class ProfilComponent {
 
   constructor(private router:Router,public userService:UserService){
 
-  
-
-
-    
-
-
   }
   readMore(){
     this.router.navigate(['/','mesinformations'])
   }
-  
 
 }

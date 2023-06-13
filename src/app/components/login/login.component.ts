@@ -1,3 +1,9 @@
+/*
+Contient un formulaire réactif et controlé par Angular
+Explications dans le composant Register
+ */
+
+
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -23,8 +29,6 @@ export class LoginComponent {
       username: new FormControl('', [Validators.required, Validators.maxLength(15)]),
       password: new FormControl('', [Validators.required])
     });
-
-    this.userService.logout();
   }
 
   onSubmit() {

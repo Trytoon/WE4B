@@ -1,0 +1,29 @@
+<div class="container">
+  <form [formGroup]="filterForm" (ngSubmit)="onSubmit()">
+    <div class="mb-4">
+      <label class="form-label" for="search">Rechercher un produit</label>
+      <input class="form-control me-2" type="search" placeholder="Rechercher" aria-label="Search" formControlName="productName" id ="search">
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="mb-4">
+          <label class="form-label" for="minPrice">Prix minimum</label>
+          <input type="number" class="form-control" placeholder="Prix en euros" min="0" id="minPrice" formControlName="minPrice">
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="mb-4">
+          <label class="form-label" for="maxPrice">Prix maximum</label>
+          <input type="number" class="form-control" placeholder="Prix en euros" min="0" id="maxPrice" formControlName="maxPrice">
+        </div>
+      </div>
+    </div>
+    <div class="mb-4">
+      <label class="form-label" for="dep">Categorie</label>
+      <select class="form-select" formControlName="cats" id="dep">
+        <option *ngFor="let cat of categories" [ngValue]="cat.id">{{ cat.name }}</option>
+      </select>
+    </div>
+    <button type="submit" class="btn btn-success w-100">Chercher</button>
+  </form>
+</div>
