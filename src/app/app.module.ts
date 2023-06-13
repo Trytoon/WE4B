@@ -17,6 +17,10 @@ import { OfferDetailsComponent } from './components/offer-details/offer-details.
 import { OfferAddComponent } from './components/offer-add/offer-add.component';
 import { HomeComponent } from './components/home/home.component';
 import { FilterComponent } from './components/filter/filter.component';
+import { OfferAddComponent } from './components/offer-add/offer-add.component';
+import { OfferDetailsComponent } from './components/offer-details/offer-details.component';
+import { ProfilComponent } from './components/profil/profil.component';
+import { HomeComponent } from './components/home/home.component';
 
 
 @NgModule({
@@ -32,6 +36,10 @@ import { FilterComponent } from './components/filter/filter.component';
     OfferAddComponent,
     HomeComponent,
     FilterComponent,
+    OfferAddComponent,
+    OfferDetailsComponent,
+    ProfilComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,

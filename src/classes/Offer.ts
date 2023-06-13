@@ -11,5 +11,6 @@ export class Offer {
               public seller : string,
               public post_date : Date,
               public shippable : boolean,
+              public liked : boolean,
               public address : Address){}
 }

@@ -1,14 +1,14 @@
 .background-container {
-    background-color: rgb(234, 199, 135);
-  }
+  background-color: rgb(234, 199, 135);
+}
 
 .erreur {
-    text-align:center;
-    color: black;
-    padding: 2px 2px;
-    border-radius: 5px;
-    background-color: #ee4848;
-    margin-bottom: 10px;
-    font-weight: bold;
-    font-size: 12px;
-  }
+  text-align:center;
+  color: black;
+  padding: 2px 2px;
+  border-radius: 5px;
+  background-color: #ee4848;
+  margin-bottom: 10px;
+  font-weight: bold;
+  font-size: 12px;
+}

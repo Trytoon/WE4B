@@ -1,3 +1,8 @@
+/*
+Contient la barre de navigation sur le site
+Utilise le routage et un form controlé qui contient juste un bouton submit
+ */
+
 import { Component } from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {Router} from "@angular/router";

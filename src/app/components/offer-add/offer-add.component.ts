@@ -1,8 +1,16 @@
+/*
+Contient un formulaire réactif et controlé par Angular
+Ajoute un produit dans le BDD et par conséquent dans la liste des produits affichés
+ */
+
+
 import {Component, Input} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {HttpClient} from "@angular/common/http";
 import {tap} from "rxjs";
+import {OfferService} from "../../services/offer.service";
+import {UserService} from "../../services/user.service";
 
 @Component({
   selector: 'app-offer-add',
@@ -12,73 +20,79 @@ import {tap} from "rxjs";
 export class OfferAddComponent {
   addOfferForm: FormGroup;
   showError : boolean = false;
+
+  categories: { id: string; name: string }[] = [];
+
   @Input() errorMessage! : string;
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private http: HttpClient) {
+  constructor(private formBuilder: FormBuilder, private router: Router, private http: HttpClient, public offerService : OfferService, public userService :UserService) {
 
+    if (!this.userService.user_logged()) {
+      this.router.navigate(['']);
+    }
+
+    //Champs des formulaires réactifs
     this.addOfferForm = this.formBuilder.group({
       title: new FormControl('', [Validators.required, Validators.maxLength(100)]),
       description: new FormControl('', [Validators.required, Validators.maxLength(1000)]),
       price: new FormControl('', [Validators.required, Validators.min(0)]),
-      // date: new FormControl('', [Validators.required]), // higgen field
       shippable: new FormControl('', [Validators.required]),
       category: new FormControl('', [Validators.required]),
-      photos: new FormControl('', [Validators.nullValidator]),
-      // seller: new FormControl('', [Validators.required]), // hidden field
+      // photos: new FormControl('', [Validators.nullValidator]),
       num_road: new FormControl('', [Validators.minLength(0)]),
       road: new FormControl('', [Validators.required, Validators.maxLength(255)]),
       city: new FormControl('', [Validators.required, Validators.maxLength(255)]),
-      zip_code: new FormControl('', [Validators.minLength(0)]),
+      zip_code: new FormControl('', [Validators.minLength(5)]),
+    });
+
+    this.offerService.getCategories().subscribe(categories => {
+      this.categories = categories;
     });
   }
 
   onSubmit() {
     if (this.addOfferForm.valid) {
-      //On recupere les champs du formulaire
-      const usernameControl = this.addOfferForm.get('username');
-      const emailControl = this.addOfferForm.get('email');
-      const passwordControl = this.addOfferForm.get('password');
-      const password2Control = this.addOfferForm.get('password2');
 
-      //Si ces champs sont définis, alors on regarde leur valeur
-      if (usernameControl && passwordControl && emailControl && password2Control) {
-        const username = usernameControl.value;
-        const email = emailControl.value;
-        const password = passwordControl.value;
-        const password2 = password2Control.value;
+      if (isNaN(Number(this.addOfferForm.get('zip_code')?.value))) {
+        this.showError = true;
+        this.errorMessage = "Le code postal doit être numérique!";
 
-        if (password === password2) {
-          const data = {
-            username: username,
-            email : email,
-            password: password
-          };
-
-          this.http.post<any>('http://localhost/WE4B/register.php', data)
-            .pipe(
-              tap(response => {
-                if (response.success == "true") {
-                  this.router.navigate(['/login']);
-                } else {
-                  this.showError = true;
-                  this.errorMessage = "Un autre utilisateur possède deja le même pseudo ou email !"
-                }
-              })
-            )
-            .subscribe();
-        } else {
-          this.showError = true;
-          this.errorMessage = "Les deux mots de passe fournis sont différents !"
+      } else {
+        //Initilisation des données à envoyer à PHP
+        const data = {
+          title : this.addOfferForm.get('title')?.value,
+          description : this.addOfferForm.get('description')?.value,
+          price : this.addOfferForm.get('price')?.value,
+          shippable : this.addOfferForm.get('shippable')?.value,
+          category : this.addOfferForm.get('category')?.value,
+          num_road : this.addOfferForm.get('num_road')?.value,
+          road : this.addOfferForm.get('road')?.value,
+          city : this.addOfferForm.get('city')?.value,
+          zip_code : this.addOfferForm.get('zip_code')?.value,
+          username : this.userService.logged_user?.nickname
         }
+
+        //Requete post
+        this.http.post<any>('http://localhost/WE4B/addProduct.php', data)
+          .pipe(
+            tap(response => {
+              if (response.success == "true") {
+                this.router.navigate(['']);
+              } else {
+                this.showError = true;
+                this.errorMessage = "Erreur lors de l'ajout du produit !"
+              }
+            })
+          )
+          .subscribe();
       }
+      //Gestion des messages d'erreurs
     } else {
       this.showError = true;
-      if (this.addOfferForm.get('email')?.hasError('email')) {
-        this.errorMessage = "Veuillez saisir une adresse email valide."
-      } else if (this.addOfferForm.get('password')?.hasError('minlength')) {
-        this.errorMessage = "Veuillez entrer un mot de passe de 8 caractères ou plus."
+      if (this.addOfferForm.get('zip_code')?.hasError('minlength')) {
+        this.errorMessage = "Le code postal doit possèder 5 chiffres !"
       } else {
-        this.errorMessage = "Veuillez remplir le formulaire."
+        this.errorMessage = "Veuillez remplir tout le formulaire."
       }
     }
   }

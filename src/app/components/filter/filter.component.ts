@@ -1,3 +1,8 @@
+/*
+Contient un formulaire réactif et controlé par Angular pour filtrer les offres en fonction du DOM
+Explications dans le composant Register
+ */
+
 import {Component} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {OfferService} from "../../services/offer.service";
@@ -33,11 +38,16 @@ export class FilterComponent {
 
   onSubmit() {
 
-    const productName = this.filterForm.get("productName")?.value;
+    let productName = this.filterForm.get("productName")?.value;
     const categorie = this.filterForm.get("cats")?.value;
     const departement = this.filterForm.get("deps")?.value;
     const minPrice = this.filterForm.get("minPrice")?.value;
     const maxPrice = this.filterForm.get("maxPrice")?.value;
+
+    //Si il n'y a que des espaces, alors on affichera tous les produits (donc il n'y a aucun filtre par nom)
+    if (productName?.trim() == "") {
+      productName = null;
+    }
 
     const data = {
       productName: productName,
@@ -46,6 +56,8 @@ export class FilterComponent {
       categorie : categorie,
       departement: departement
     };
+
+
 
     this.offerService.applyFilters(data);
     this.offerService.getCategories()
