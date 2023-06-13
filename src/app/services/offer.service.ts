@@ -128,7 +128,7 @@ export class OfferService {
     if (offer) {
       for (let j : number = 1; j <= (offer.nb_pictures as number); j++) {
         console.log('adding path')
-        pathsPictures.push(`src/assets/offerpictures/offer${offer.nb_pictures}/${j}.jpg`)
+        pathsPictures.push(`src/assets/offerpictures/offer${offer.id}/${j}.jpg`)
       }
     }
     return pathsPictures

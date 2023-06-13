@@ -17,7 +17,7 @@ $request_body = file_get_contents('php://input');
 $data = json_decode($request_body);
 
 // Si on est sur la page de filtrage, alors on applique chaque filtre fourni par l'utilisateur un par un
-if ($data && property_exists($data, 'productName') && isset($data->productName)) {
+if ($data && property_exists($data, 'productName')) {
   $query = "SELECT OFR.*, OFR.ID as `offer_id`, USR.pseudo, ADR.*, CAT.id, CAT.nom as `category_name` , '0' as `is_liked`
 			  FROM `offre` OFR
               INNER JOIN utilisateur USR ON OFR.id_utilisateur = USR.id
@@ -121,7 +121,7 @@ if ($data && property_exists($data, 'productName') && isset($data->productName))
   }
 }
 
-echo $query;
+//echo $query;
 
 $result = $conn->query($query);
 if ($result) {
