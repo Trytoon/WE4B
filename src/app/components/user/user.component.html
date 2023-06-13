@@ -1,9 +1,15 @@
 <app-navbar></app-navbar>
-<div class="container">
+<div class="container" *ngIf="service.user_logged();retourhome">
     <h1>Edit Profile</h1>
   	<hr>
+
+    <ng-template #retourhome>
+      <!-- Redirection vers une autre page -->
+      <ng-container redirectToLogin()></ng-container>
+    </ng-template>
 	<div class="row">
       <!-- left column -->
+
 
       
       
@@ -102,7 +108,7 @@
               <img src="{{user.picture}}" class="avatar img-circle" alt="avatar">
               <h6>Upload a different photo...</h6>
               
-              <input type="file" class="form-control" name="photo"  accept="image/*" [(ngModel)]="user.picture" name="picture" >
+              <input type="file" class="form-control" name="photo"  accept="image/*" [(ngModel)]="picture" name="picture" id="picture" >
     
             </div>
           </div>
