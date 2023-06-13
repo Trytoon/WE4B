@@ -77,6 +77,8 @@ export class OfferListComponent implements OnInit {
       } else {
         //Liste de toutes les offres
 
+        this.displayFilterOption = true;
+
         const data = {
           username: this.userService.logged_user?.nickname,
         };

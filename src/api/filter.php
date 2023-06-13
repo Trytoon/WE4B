@@ -16,11 +16,10 @@ ConnectDatabase();
 $request_body = file_get_contents('php://input');
 $data = json_decode($request_body);
 
-$liked = false; // Pour savoir si l'offre a été likée par l'utilisateur. Varie en fonction de s'il est connecté ou pas
-
 // Si on est sur la page de filtrage, alors on applique chaque filtre fourni par l'utilisateur un par un
-if ($data && property_exists($data, 'productName')) {
-  $query = "SELECT OFR.*, OFR.ID as `offer_id`, USR.pseudo, ADR.*, CAT.id, CAT.nom as `category_name` FROM `offre` OFR, '0' as `is_liked`
+if ($data && property_exists($data, 'productName') && isset($data->productName)) {
+  $query = "SELECT OFR.*, OFR.ID as `offer_id`, USR.pseudo, ADR.*, CAT.id, CAT.nom as `category_name` , '0' as `is_liked`
+			  FROM `offre` OFR
               INNER JOIN utilisateur USR ON OFR.id_utilisateur = USR.id
               INNER JOIN adresse ADR ON OFR.adresse = ADR.id
               INNER JOIN categorie CAT ON CAT.id = OFR.categorie
@@ -96,7 +95,7 @@ if ($data && property_exists($data, 'productName')) {
                     ORDER BY OFR.date DESC
                     LIMIT 100;";
 
-      $liked = true;
+
     } else {
       // Pour récupérer la liste des offres pour un utilisateur spécifique
       $query = "SELECT OFR.*, OFR.ID as `offer_id`, USR.pseudo, ADR.*, CAT.id, CAT.nom as `category_name`,
@@ -122,7 +121,7 @@ if ($data && property_exists($data, 'productName')) {
   }
 }
 
-// echo $query;
+echo $query;
 
 $result = $conn->query($query);
 if ($result) {
@@ -144,7 +143,7 @@ if ($result) {
       "addressCity" => $row['nom_ville'],
       "addressZipCode" => $row['cp'],
       "date" => $row['date'],
-      "liked" => $row['is_liked'], // Par défaut, on a aucune information sur la personne connectée et donc on ne sait pas si l'offre est likée ou pas !
+      "liked" => $row['is_liked']
     );
     $offers[] = $offer;
   }
