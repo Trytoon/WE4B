@@ -32,8 +32,8 @@ function ConnectDatabase()
 // Create connection
     $servername = "localhost";
     $username = "root";
-    $password = "";
-    $dbname = "forum";
+    $password = "root";
+    $dbname = "leboncoin";
 
     global $conn;
     $conn = new mysqli($servername, $username, $password, $dbname);

@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
-import { UserService } from 'src/app/service/user.service';
+import {UserService} from "../../services/user.service";
 import { User } from 'src/classes/User';
 import { Router } from '@angular/router';
+import { NavbarComponent } from '../navbar/navbar.component';
+import { RouterOutlet } from '@angular/router';
+
 
 @Component({
   selector: 'app-profil',
@@ -11,11 +14,9 @@ import { Router } from '@angular/router';
 export class ProfilComponent {
   userArray:User[]=[]
 
-  constructor(private router:Router,service:UserService){
+  constructor(private router:Router,public userService:UserService){
 
-    
-
-    this.userArray=service.getUsers()
+  
 
 
     
@@ -23,7 +24,7 @@ export class ProfilComponent {
 
   }
   readMore(){
-    this.router.navigate(['/','mesinformations',0])
+    this.router.navigate(['/','mesinformations'])
   }
   
 

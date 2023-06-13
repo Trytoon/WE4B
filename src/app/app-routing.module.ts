@@ -1,33 +1,25 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { Routes, RouterModule, Route } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 
-import{ProfilComponent} from 'src/app/components/profil/profil.component';
-import { OfferComponent } from './components/offer/offer.component';
-import { NavbarComponent } from './components/navbar/navbar.component';
-import { FooterComponent } from './components/footer/footer.component';
 import { LoginComponent } from './components/login/login.component';
-import { OfferListComponent } from './components/offer-list/offer-list.component';
 import { RegisterComponent } from './components/register/register.component';
+import {OfferListComponent} from "./components/offer-list/offer-list.component";
+import {NavbarComponent} from "./components/navbar/navbar.component";
+import { ProfilComponent } from './components/profil/profil.component';
 import { UserComponent } from './components/user/user.component';
-import { User } from 'src/classes/User';
 
-const routes:Routes=[
+const routes: Routes = [
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
+  { path: 'offer-list', component: OfferListComponent},
+  { path: '', component: NavbarComponent},
   {path:'profil',component:ProfilComponent},
-  {path:'mesinformations/:id',component:UserComponent},
-  {path:'footer',component:FooterComponent},
-  {path:'offerlist',component:OfferListComponent},
-  { path: "", redirectTo: "/profil", pathMatch: "full" },
+  {path:'mesinformations',component:UserComponent},
 
-]
+];
 
 @NgModule({
-  declarations: [],
-  imports: [
-    RouterModule.forRoot(routes)
-  ],
-  exports:[
-    RouterModule
-  ],
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
 })
 export class AppRoutingModule { }
