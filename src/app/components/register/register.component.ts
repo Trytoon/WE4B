@@ -53,7 +53,7 @@ export class RegisterComponent {
           };
 
           //Requete POST PHP
-          this.http.post<any>('http://localhost/WE4B/register.php', data)
+          this.http.post<any>('http://localhost/we4b_jkimenau_echaussoy_tfridblatt/register.php', data)
             .pipe(
               tap(response => {
                 if (response.success == "true") {

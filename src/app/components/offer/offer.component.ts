@@ -33,7 +33,7 @@ export class OfferComponent implements OnInit {
         id_product: this.offer.id
       };
 
-      this.http.post<any>('http://localhost/WE4B/likeProduct.php', data)
+      this.http.post<any>('http://localhost/we4b_jkimenau_echaussoy_tfridblatt/likeProduct.php', data)
         .subscribe(response => {
           if (response.success == "true") {
             this.logged_user_liked = true;
@@ -50,7 +50,7 @@ export class OfferComponent implements OnInit {
         id_product: this.offer.id
       };
 
-      this.http.post<any>('http://localhost/WE4B/dislikeProduct.php', data)
+      this.http.post<any>('http://localhost/we4b_jkimenau_echaussoy_tfridblatt/dislikeProduct.php', data)
         .subscribe(response => {
           if (response.success == "true") {
             this.logged_user_liked = false;
