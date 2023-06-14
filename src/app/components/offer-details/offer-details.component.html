@@ -2,11 +2,25 @@
   <div class="row">
     <div class="col-lg-8 offset-lg-2">
       <div class="card">
-        <div class="card-header">
-          <img *ngFor="let picturePath of pathsPictures" [src]="picturePath" alt="{{picturePath}}">
+        
           
+
+        <div id="ourcarousel" class="carousel slide">
+          <div class="carousel-inner">
+            <!-- <img *ngFor="let picturePath of pathsPictures" [src]="picturePath" alt="{{picturePath}}"> -->
+            <div class="carousel-item" *ngFor="let picturePath of pathsPictures; let isFirst = first" [class.active]="isFirst">
+              <img [src]="picturePath" class="d-block w-100" [alt]="picturePath">
+            </div>
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#ourcarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#ourcarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
         </div>
-        <img src="https://i.pinimg.com/originals/5b/f6/0a/5bf60a85a633b2add2911175ea8c4f4d.jpg" class="card-img" alt="Image">
         <div class="card-body">
           <h4 class="card-title">{{offerDetails.offer.title}}</h4>
           <p class="card-text"><strong>Description :</strong> {{offerDetails.offer.description}}</p>

@@ -27,13 +27,8 @@ export class OfferDetailsComponent {
 
     this.serviceOffer.getOfferDetails(this.offer_index).subscribe(data => {
       this.offerDetails = data[0];
-      console.log("data offer Details : ");
-      console.log(this.offerDetails)
-
-      console.log(this.offerDetails.offer.nb_pictures)
 
       this.pathsPictures = serviceOffer.getOfferPictures(this.offerDetails.offer)
-      // console.log(this.pathsPictures)
     });
   }
 }
