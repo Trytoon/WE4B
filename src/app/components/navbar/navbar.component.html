@@ -13,9 +13,13 @@
       <button class="btn btn-outline-primary me-2" routerLink="/">Accueil</button>
     </div>
 
+    <div class="navbar-nav ms-auto" *ngIf="userService.user_logged()">
+      <button class="btn btn-outline-primary me-2" routerLink="/add-offer">Ajouter un produit</button>
+      <button class="btn btn-outline-primary me-2" routerLink="/user-profile">Consulter mes informations</button>
+    </div>
+
     <form class="d-flex" [formGroup]="searchForm" (ngSubmit)="onSearch()">
       <button class="btn btn-success" type="submit">Search</button>
     </form>
   </div>
 </nav>
-

@@ -31,11 +31,9 @@ export class OfferDetailsComponent {
       console.log(this.offerDetails)
 
       console.log(this.offerDetails.offer.nb_pictures)
-      
+
       this.pathsPictures = serviceOffer.getOfferPictures(this.offerDetails.offer)
       // console.log(this.pathsPictures)
     });
-
-    
   }
 }

@@ -52,7 +52,7 @@ export class LoginComponent {
           password: password
         };
 
-        this.http.post<any>('http://localhost/projet/src/api/login.php', data)
+        this.http.post<any>('http://localhost/WE4B/login.php', data)
           .pipe(
             tap(response => {
               if (response.success == "true") {
@@ -98,5 +98,5 @@ export class LoginComponent {
       this.errorMessage = "Veuillez remplir le formulaire !";
     }
   }
-    
+
 }

@@ -85,31 +85,6 @@ export class OfferService {
     );
   }
 
-
-  //Pour un utilisateur donné, interroge la base de données et recupère tous les produits likés par l'utilisateur
-  //Ecouté dans OfferComponentList puis réinjecté vers chaque produit
-  getUserLikeStatut(): Observable<string[]> {
-    if (this.userService.user_logged()) {
-      const data = {
-        username: this.userService.logged_user?.nickname,
-      };
-
-      return this.http.post<any>('http://localhost/WE4B/userLikeStatut.php', data)
-        .pipe(
-          map(response => {
-            if (response.success === "true" && response.offreIds) {
-              return response.offreIds;
-            } else {
-              return [];
-            }
-          })
-        );
-    } else {
-      return of([]);
-    }
-  }
-
-  
   getOfferDetails(id: number): Observable<any[]> {
     return this.http.post<any>('http://localhost/WE4B/fetchOffer.php', { id }).pipe(
       map(response => {
@@ -125,7 +100,7 @@ export class OfferService {
   getOfferPictures(offer : Offer): string[] {
     // const offerWithId : Offer | undefined = this.offerArray.find(offer => offer.id === idOffer);
     let pathsPictures: string[] = []
-    
+
     if (offer) {
       for (let j : number = 1; j <= (offer.nb_pictures as number); j++) {
         console.log('adding path')

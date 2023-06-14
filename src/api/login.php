@@ -20,9 +20,11 @@ if ($data) {
     $username = $data->username;
     $password = $data->password;
 
-    $username = mysqli_real_escape_string($conn, $username);
+	$username = mysqli_real_escape_string($conn, $username);
+	$password = mysqli_real_escape_string($conn, $password);
 
-    $query = "SELECT * FROM utilisateur WHERE pseudo='" . $username . "'";
+	$query = "SELECT * FROM utilisateur WHERE pseudo='" . $username . "' AND password = '" . $password . "'";
+
     $result = $conn->query($query);
 
     // On vérifie qu'il y a bien un utilisateur qui correspond au pseudo

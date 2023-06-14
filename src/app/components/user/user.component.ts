@@ -11,70 +11,65 @@ import { Router } from '@angular/router';
 })
 export class UserComponent implements OnInit {
   @Input() user!: User;
-
-  verificationmdp: boolean = true
-
-  password: string = ''
+  password: string = '';
   confirmpassword: string = '';
-  picture: string = "";
-  finalpicture: string[] = [];
+  picture: string = '';
 
-
-
-  constructor(public service: UserService, private router: Router,) {
-
+  constructor(public service: UserService, private router: Router) {
     if (this.service.logged_user !== undefined) {
       this.user = this.service.logged_user;
+    } else {
+      this.router.navigate(['']);
     }
   }
 
-  ngOnInit(): void {
-
-  }
+  ngOnInit(): void {}
 
   onSubmit(): void {
-
-    //Verification des mots de passe
-    this.verificationmdp = true
-
-    if (this.password != "" && this.confirmpassword != "") {
-
-      if (this.password == this.confirmpassword) {
-        if (this.password.length > 7) {
-          this.user.password = this.password
-
-        } else {
-          window.alert("votre mot de passe doit faire au moins 8 caractères!")
-          this.verificationmdp = false
-        }
+    // Vérification des mots de passe
+    if (this.password !== "" || this.confirmpassword !== "") {
+      if (this.password === "" || this.confirmpassword === "") {
+        window.alert("Veuillez remplir les deux champs de mot de passe.");
+        return;
       }
-      else {
-        window.alert("vos deux mots de passe ne sont pas concordants!")
-        this.verificationmdp = false
+
+      if (this.password !== this.confirmpassword) {
+        window.alert("Les deux mots de passe ne sont pas identiques.");
+        return;
+      }
+
+      if (this.password.length < 8) {
+        window.alert("Votre mot de passe doit comporter au moins 8 caractères.");
+        return;
+      }
+
+      this.user.password = this.password;
+    }
+
+    // Vérification des champs d'adresse
+    if (this.user.address.number !== "" || this.user.address.street !== "" || this.user.address.city !== "" || this.user.address.zip_code !== "") {
+      if (this.user.address.number === "" || this.user.address.street === "" || this.user.address.city === "" || this.user.address.zip_code === "") {
+        window.alert("Veuillez remplir tous les champs de l'adresse.");
+        return;
       }
     }
 
-    if (this.user.nickname != "" && this.user.email != "" && this.verificationmdp == true) {
-
-      //Pour updater l'image
-      this.finalpicture = this.picture.split("\\", 3)
-      this.picture = this.finalpicture[2];
-      this.picture = "assets/profilpictures/" + this.picture
-
-      if (this.picture != "assets/profilpictures/undefined") {
-        this.user.picture = this.picture
-      }
-
-      this.service.modifyuser(this.user);
-      this.router.navigate(['/profil']);
-
+    // Vérification des champs de nom et prénom
+    if (this.user.first_name === "" || this.user.last_name === "") {
+      window.alert("Veuillez remplir tous les champs du nom et du prénom.");
+      return;
     }
 
-    else {
-      if (this.verificationmdp == true) {
-        window.alert("vous n'avez pas rempli tous les champs")
-      }
-
+    // Traitement de l'image
+    if (this.picture !== "") {
+      const pictureName = this.picture.split("\\").pop() || "";
+      this.user.picture = "assets/profilpictures/" + pictureName;
     }
+
+    // Modifier les informations de l'utilisateur
+    this.service.modifyuser(this.user);
   }
+
 }
+
+

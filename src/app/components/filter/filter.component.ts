@@ -6,6 +6,7 @@ Explications dans le composant Register
 import {Component} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {OfferService} from "../../services/offer.service";
+import {UserService} from "../../services/user.service";
 
 @Component({
   selector: 'app-filter',
@@ -18,7 +19,7 @@ export class FilterComponent {
 
   categories: { id: string; name: string }[] = [];
 
-  constructor(private formBuilder : FormBuilder, public offerService : OfferService) {
+  constructor(private formBuilder : FormBuilder, public offerService : OfferService, public userService : UserService) {
     this.filterForm = this.formBuilder.group({
       deps: new FormControl(),
       cats: new FormControl(),
@@ -27,14 +28,10 @@ export class FilterComponent {
       productName: new FormControl(),
     });
 
-
-    this.offerService.applyFilters(null)
     this.offerService.getCategories().subscribe(categories => {
       this.categories = categories;
     });
   }
-
-
 
   onSubmit() {
 
@@ -43,23 +40,27 @@ export class FilterComponent {
     const departement = this.filterForm.get("deps")?.value;
     const minPrice = this.filterForm.get("minPrice")?.value;
     const maxPrice = this.filterForm.get("maxPrice")?.value;
+    let data;
 
-    //Si il n'y a que des espaces, alors on affichera tous les produits (donc il n'y a aucun filtre par nom)
-    if (productName?.trim() == "") {
-      productName = null;
+    if (this.userService.user_logged()) {
+      data = {
+        productName: productName,
+        minPrice : minPrice,
+        maxPrice : maxPrice,
+        categorie : categorie,
+        departement: departement,
+        username : this.userService.logged_user?.nickname
+      };
+    } else {
+      data = {
+        productName: productName,
+        minPrice : minPrice,
+        maxPrice : maxPrice,
+        categorie : categorie,
+        departement: departement,
+      };
     }
-
-    const data = {
-      productName: productName,
-      minPrice : minPrice,
-      maxPrice : maxPrice,
-      categorie : categorie,
-      departement: departement
-    };
-
-
-
-    this.offerService.applyFilters(data);
     this.offerService.getCategories()
+    this.offerService.applyFilters(data);
   }
 }

@@ -5,28 +5,19 @@ header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Allow-Origin: * ");
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+header("Content-Type: application/json");
 
-$request = file_get_contents('php://input');
-$data = json_decode($request);
+include("./database.php");
 
- $servername = "localhost";
- $username   = "root";
- $password   = "root";
- $dbname     = "leboncoin";
+global $conn;
+ConnectDatabase();
 
 
+//Par defaut, Angular envoie un array json au serveur. Pour lire ces données, il faut décoder le json
+$request_body = file_get_contents('php://input');
+$data = json_decode($request_body);
 
- 
- // Create connection
- $conn = new mysqli($servername, $username, $password, $dbname);
- 
- // Check connection
- if ($conn->connect_error) {
-     die("Connection failed: " . $conn->connect_error);
- } 
-
-
- if ($data) {
+if ($data) {
     //les champs de l'addresse
     $streetnumber=$data->streetnumber;
     $street=$data->street;
@@ -74,7 +65,7 @@ $data = json_decode($request);
        
         //L'utilisateur supprime son addresse
 
-        if (isset($streetnumber) or $streetnumber == "") {
+        if (!isset($streetnumber)) {
             $query = "DELETE FROM `adresse` WHERE `adresse`.`id` = '$adresseid'";
             $result = $conn->query($query);
             $newAddresseID = -1;

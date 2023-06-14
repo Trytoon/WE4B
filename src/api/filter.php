@@ -18,12 +18,35 @@ $data = json_decode($request_body);
 
 // Si on est sur la page de filtrage, alors on applique chaque filtre fourni par l'utilisateur un par un
 if ($data && property_exists($data, 'productName')) {
-  $query = "SELECT OFR.*, OFR.ID as `offer_id`, USR.pseudo, ADR.*, CAT.id, CAT.nom as `category_name` , '0' as `is_liked`
+	
+	
+	if (property_exists($data, 'username')) {
+		    $username = $data->username;
+
+		// Récupérer l'id de l'utilisateur
+		$query = "SELECT id FROM utilisateur WHERE pseudo = '" . $username . "'";
+		$result = $conn->query($query);
+
+		$row = $result->fetch_assoc();
+		$id = $row["id"];
+	
+	  $query = "SELECT OFR.*, OFR.ID as `offer_id`, USR.pseudo, ADR.*, CAT.id, CAT.nom as `category_name`,
+                    IF(ITR.id_utilisateur IS NOT NULL, 1, 0) as `is_liked`
+                    FROM `offre` OFR
+                    INNER JOIN utilisateur USR ON OFR.id_utilisateur = USR.id
+                    INNER JOIN adresse ADR ON OFR.adresse = ADR.id
+                    INNER JOIN categorie CAT ON CAT.id = OFR.categorie
+                    LEFT JOIN interet ITR ON OFR.id = ITR.id_offre AND ITR.id_utilisateur = '$id'
+                    WHERE ";
+	} else {
+		  $query = "SELECT OFR.*, OFR.ID as `offer_id`, USR.pseudo, ADR.*, CAT.id, CAT.nom as `category_name` , '0' as `is_liked`
 			  FROM `offre` OFR
               INNER JOIN utilisateur USR ON OFR.id_utilisateur = USR.id
               INNER JOIN adresse ADR ON OFR.adresse = ADR.id
               INNER JOIN categorie CAT ON CAT.id = OFR.categorie
               WHERE ";
+	}
+
 
   if (property_exists($data, 'productName')) {
     $productName = $data->productName;
@@ -121,7 +144,7 @@ if ($data && property_exists($data, 'productName')) {
   }
 }
 
-//echo $query;
+// echo $query;
 
 $result = $conn->query($query);
 if ($result) {

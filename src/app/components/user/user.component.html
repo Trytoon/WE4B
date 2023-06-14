@@ -1,119 +1,54 @@
-<app-navbar></app-navbar>
-<div class="container" *ngIf="service.user_logged();retourhome">
-    <h1>Edit Profile</h1>
-  	<hr>
-
-    <ng-template #retourhome>
-      <!-- Redirection vers une autre page -->
-      <ng-container redirectToLogin()></ng-container>
-    </ng-template>
-	<div class="row">
-      <!-- left column -->
-
-
-      
-      
-      <!-- edit form column -->
-      <div class="col-md-9 ">
-        
-        <h3>Mes informations</h3>
-        
-        <form role="form"   >
-          
-          <div class=" mb-4 form-group">
-            <label class="col-lg-3 control-label">First name:</label>
-            <div class="col-lg-8">
-              <input class="form-control" type="text"   [(ngModel)]="user.first_name" name="first_name" >
-              
-            </div>
+<div class="background-container">
+  <div class = "container p-5">
+    <div class = "row align-items-center justify-content-center">
+      <div class = "col-sm-8 col-md-6 col-lg-8 bg-white rounded p-4 shadow">
+        <h3 class="mb-5" style="text-align: center;">Modifier ses informations</h3>
+        <hr><br>
+        <form role="form">
+          <div class="mb-4 form-group">
+            <label class="control-label">Nom:</label>
+            <input class="form-control" type="text" [(ngModel)]="user.first_name" name="first_name">
           </div>
           <div class="mb-4 form-group">
-            <label class="col-lg-3 control-label">Last name:</label>
-            <div class="col-lg-8">
-              <input class="form-control" type="text"  [(ngModel)]="user.last_name" name="last_name" >
-            </div>
-          </div>
-          
-          <div class="mb-4 form-group">
-            <label class="col-lg-3 control-label">Email:</label>
-            <div class="col-lg-8">
-              <input class="form-control" type="text"   [(ngModel)]="user.email" name="email">
-            </div>
-          </div>
-          
-          <div class="mb-4 form-group">
-            <label class="col-md-3 control-label">Username:</label>
-            <div class="col-md-8">
-              <input class="form-control" type="text"   [(ngModel)]="user.nickname" name="nickname">
-            </div>
-          </div>
-
-
-          <div class="mb-4 row g-2">
-            <div class="form-group">
-              <div class="col col-md-3">
-
-                <label class=" control-label">Numéro de rue</label>
-                <input class="form-control" type="text"   [(ngModel)]="user.address.number" name="addressnumber">
-              </div>
-              <div class="col col-md-4">
-                <label class=" control-label">Rue</label>
-                <input class="form-control" type="text"   [(ngModel)]="user.address.street" name="addressstreet">
-              </div>
-
-            </div>
-          </div>
-
-
-          <div class="row g-2">
-            <div class="mb-4 form-group">
-              <label class="col-md-3 control-label">Ville</label>
-              <div class="col-md-8">
-                <input class="form-control" type="text"   [(ngModel)]="user.address.city" name="addresscity">
-              </div>
-              <label class="col-md-3 control-label">Code postal</label>
-              <div class="col-md-8">
-                <input class="form-control" type="text"   [(ngModel)]="user.address.zip_code" name="addresszip">
-              </div>
-
-            </div>
-          </div>
-
-
-
-
-
-          <div class="mb-4 form-group">
-            <label class="col-md-3 control-label">Change password:</label>
-            <div class="col-md-8">
-              <input class="form-control" type="password" value="" [(ngModel)]="password" name="password">
-            </div>
+            <label class="control-label">Prénom:</label>
+            <input class="form-control" type="text" [(ngModel)]="user.last_name" name="last_name">
           </div>
           <div class="mb-4 form-group">
-            <label class="col-md-3 control-label">Confirm change password:</label>
-            <div class="col-md-8">
-              <input class="form-control" type="password" value=""  [(ngModel)]="confirmpassword" name="confirmpassword">
-            </div>
+            <label class="control-label">Numéro de rue</label>
+            <input class="form-control" type="number" [(ngModel)]="user.address.number" name="addressnumber" min="0">
           </div>
           <div class="mb-4 form-group">
-            <label class="col-md-3 control-label"></label>
-            <div class="col-md-8">
-              <input type="button" (click)="onSubmit()" class="btn btn-primary" value="Save Changes">
-              
+            <label class="control-label">Rue</label>
+            <input class="form-control" type="text" [(ngModel)]="user.address.street" name="addressstreet">
+          </div>
+          <div class="mb-4 form-group">
+            <label class="control-label">Ville</label>
+            <input class="form-control" type="text" [(ngModel)]="user.address.city" name="addresscity">
+          </div>
+          <div class="mb-4 form-group">
+            <label class="control-label">Code postal</label>
+            <input class="form-control" type="text" [(ngModel)]="user.address.zip_code" name="addresszip" minlength="5" maxlength="5">
+          </div>
+          <div class="mb-4 form-group">
+            <label class="control-label">Changer le mot de passe:</label>
+            <input class="form-control" type="password" value="" [(ngModel)]="password" name="password" minlength="8">
+          </div>
+          <div class="mb-4 form-group">
+            <label class="control-label">Confirmer le nouveau mot de passe:</label>
+            <input class="form-control" type="password" value="" [(ngModel)]="confirmpassword" name="confirmpassword" minlength="8">
+          </div>
+          <div class="text-center">
+            <div class="mb-4">
+              <img src="{{ user.picture }}" class="avatar img-circle" alt="avatar">
+            </div>
+            <div class="mb-4">
+              <label for="photoUpload" class="form-label">Upload a different photo...</label>
+              <input type="file" id="photoUpload" class="form-control" name="photo" accept="image/*" [(ngModel)]="picture">
             </div>
           </div>
-
-          <div class="col-md-3">
-            <div class="text-center">
-              <img src="{{user.picture}}" class="avatar img-circle" alt="avatar">
-              <h6>Upload a different photo...</h6>
-              
-              <input type="file" class="form-control" name="photo"  accept="image/*" [(ngModel)]="picture" name="picture" id="picture" >
-    
-            </div>
-          </div>
+          <input type="button" (click)="onSubmit()" class="btn btn-success w-100" value="Save Changes">
         </form>
       </div>
+    </div>
   </div>
 </div>
-<hr>

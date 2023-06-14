@@ -14,17 +14,13 @@ import {HomeComponent} from "./components/home/home.component";
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'offer-add', component: OfferAddComponent},
-  { path: 'offer-list', component: OfferListComponent },
+  { path: 'offer-list', component: OfferListComponent},
   { path: 'add-offer', component: OfferAddComponent},
   { path: 'offer-list/:index', component: OfferDetailsComponent},
   { path: 'user-profile/:page', component: OfferListComponent},
   { path: 'user-profile', component: ProfilComponent},
-  { path: '', component: HomeComponent },
-  { path:'profil',component:ProfilComponent },
-  { path:'mesinformations',component:UserComponent },
-
-
+  { path: 'profile', component: UserComponent},
+  { path: '', component: HomeComponent}
 ];
 
 @NgModule({
