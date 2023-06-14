@@ -31,6 +31,7 @@ if ($data) {
 		$row = $result->fetch_assoc();
 
         $address = array(
+            "id" => $row['adresse'],
             "number" => $row['numero'],
 			"street" => $row['nom_rue'],
 			"city" => $row['nom_ville'],
