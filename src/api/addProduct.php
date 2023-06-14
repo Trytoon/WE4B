@@ -49,7 +49,7 @@ if ($data) {
             $user_id = $rows["id"];
 
             $query = "INSERT INTO `offre`(`titre`, `nb_photo`, `prix`, `detail`, `livrable`, `categorie`, `id_utilisateur`, `adresse`) 
-            VALUES ('$title','5','$price','$description','$shippable','$category','$user_id','$lastInsertId')";
+            VALUES ('$title','0','$price','$description','$shippable','$category','$user_id','$lastInsertId')";
 
             $result = $conn->query($query);
 

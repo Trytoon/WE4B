@@ -52,7 +52,7 @@ export class LoginComponent {
           password: password
         };
 
-        this.http.post<any>('http://localhost/we4b_jkimenau_echaussoy_tfridblatt/login.php', data)
+        this.http.post<any>('http://localhost/WE4B/login.php', data)
           .pipe(
             tap(response => {
               if (response.success == "true") {
