@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 })
 export class UserComponent implements OnInit {
   @Input() user!: User;
+  oldpassword: string = '';
   password: string = '';
   confirmpassword: string = '';
   picture: string = '';
@@ -27,23 +28,28 @@ export class UserComponent implements OnInit {
 
   onSubmit(): void {
     // Vérification des mots de passe
-    if (this.password !== "" || this.confirmpassword !== "") {
-      if (this.password === "" || this.confirmpassword === "") {
-        window.alert("Veuillez remplir les deux champs de mot de passe.");
-        return;
+    if (this.oldpassword !== "" || this.password !== "" || this.confirmpassword !== "") {
+      if (this.oldpassword === this.user.password) {
+        if (this.password === "" || this.confirmpassword === "") {
+          window.alert("Veuillez remplir les deux champs de mot de passe.");
+          return;
+        }
+  
+        if (this.password !== this.confirmpassword) {
+          window.alert("Les deux champs du nouveau mot de passe ne sont pas identiques.");
+          return;
+        }
+  
+        if (this.password.length < 8) {
+          window.alert("Votre mot de passe doit comporter au moins 8 caractères.");
+          return;
+        }
+  
+        this.user.password = this.password;
+      } else {
+        window.alert("Ancien mot de passe incorrect.");
+          return;
       }
-
-      if (this.password !== this.confirmpassword) {
-        window.alert("Les deux mots de passe ne sont pas identiques.");
-        return;
-      }
-
-      if (this.password.length < 8) {
-        window.alert("Votre mot de passe doit comporter au moins 8 caractères.");
-        return;
-      }
-
-      this.user.password = this.password;
     }
 
     // Vérification des champs d'adresse

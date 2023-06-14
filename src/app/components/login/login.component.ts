@@ -42,17 +42,12 @@ export class LoginComponent {
         const username = usernameControl.value;
         const password = passwordControl.value;
 
-        //todo: Si la case rester connecté est cochée, demander au serveur backend de setup des cookies
-        if (this.rememberMe) {
-          console.log("Alors comme ca tu veux qu'on se souvienne de toi ?")
-        }
-
         const data = {
           username: username,
           password: password
         };
 
-        this.http.post<any>('http://localhost/WE4B/login.php', data)
+        this.http.post<any>('http://localhost/we4b_jkimenau_echaussoy_tfridblatt/login.php', data)
           .pipe(
             tap(response => {
               if (response.success == "true") {
@@ -80,7 +75,7 @@ export class LoginComponent {
                     response.user.password,
                     response.user.picture
                 );
-                console.log(this.userService.logged_user)
+                // console.log(this.userService.logged_user)
 
                 this.router.navigate(['/offer-list']);
               } else {

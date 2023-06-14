@@ -34,7 +34,7 @@ export class OfferService {
     if (filter === null) {
       filter = { filter: null };
     }
-    this.http.post<any>('http://localhost/WE4B/filter.php', filter).subscribe(response => {
+    this.http.post<any>('http://localhost/we4b_jkimenau_echaussoy_tfridblatt/filter.php', filter).subscribe(response => {
       if (response.success === true && response.offers) {
         const offers = response.offers.map((offerData: any) => {
 
@@ -72,7 +72,7 @@ export class OfferService {
   //Interroge la base de données et retourne une liste de toutes les catégories existantes sur le site.
   //On exploite cette liste dans des listes déroulantes ensuite
   getCategories(): Observable<{ id: string, name: string }[]> {
-    return this.http.post<any>('http://localhost/WE4B/fetchCategories.php', null).pipe(
+    return this.http.post<any>('http://localhost/we4b_jkimenau_echaussoy_tfridblatt/fetchCategories.php', null).pipe(
       map(response => {
         if (response.success === true && response.categories) {
           return response.categories.map((category: any) => {
@@ -86,7 +86,7 @@ export class OfferService {
   }
 
   getOfferDetails(id: number): Observable<any[]> {
-    return this.http.post<any>('http://localhost/WE4B/fetchOffer.php', { id }).pipe(
+    return this.http.post<any>('http://localhost/we4b_jkimenau_echaussoy_tfridblatt/fetchOffer.php', { id }).pipe(
       map(response => {
         if (response.success === true && response.offerdetail) {
           return [response.offerdetail];
@@ -98,13 +98,11 @@ export class OfferService {
   }
 
   getOfferPictures(offer : Offer): string[] {
-    // const offerWithId : Offer | undefined = this.offerArray.find(offer => offer.id === idOffer);
     let pathsPictures: string[] = []
 
     if (offer) {
-      for (let j : number = 1; j <= (offer.nb_pictures as number); j++) {
-        console.log('adding path')
-        pathsPictures.push(`src/assets/offerpictures/offer${offer.id}/${j}.jpg`)
+      for (let j: number = 1; j <= offer.nb_pictures; j++) {
+        pathsPictures.push(`assets/offerpictures/offer${offer.id}/${j}.jpg`)
       }
     }
     return pathsPictures
