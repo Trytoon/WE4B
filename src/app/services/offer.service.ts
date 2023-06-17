@@ -101,8 +101,13 @@ export class OfferService {
     let pathsPictures: string[] = []
 
     if (offer) {
-      for (let j: number = 1; j <= offer.nb_pictures; j++) {
-        pathsPictures.push(`assets/offerpictures/offer${offer.id}/${j}.jpg`)
+
+      if (offer.nb_pictures == 0) {
+        pathsPictures.push(`assets/offerpictures/offerdefault/default.png`)
+      } else {
+        for (let j: number = 1; j <= offer.nb_pictures; j++) {
+          pathsPictures.push(`assets/offerpictures/offer${offer.id}/${j}.jpg`)
+        }
       }
     }
     return pathsPictures

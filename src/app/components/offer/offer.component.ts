@@ -20,11 +20,16 @@ import {OfferService} from "../../services/offer.service";
 export class OfferComponent implements OnInit {
   @Input() offer!: Offer; // L'offre à afficher
   @Input() logged_user_liked! : boolean; // Gere l'affichage du bouton like/dislinke en fonction de si l'utilisateur a liké ou non le produit
+  @Input() offer_first_picture !: string; // Chemin de la première image de l'offre
 
   @Input() canBeRemovedFromList! : boolean; //Pour savoir s'il peut disparaitre une fois à l'ecran. Pour disliker un produit
-  constructor(public userService: UserService, public router: Router, public http: HttpClient, public offerService : OfferService) {}
+  constructor(public userService: UserService, public router: Router, public http: HttpClient, public offerService : OfferService) {
+  
+  }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.offer_first_picture = this.offerService.getOfferPictures(this.offer)[0] // Seulement la première image
+  }
 
   // Pour liker un produit. Modifie le statut de like logged_user_liked si l'utilisateur avait retiré son like précédent
   like(): void {

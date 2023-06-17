@@ -57,8 +57,8 @@ if ($data) {
                 "last_name" => $row['nom'],
                 "email" => $row['email'],
                 "reg_date" => $row['creation_compte'],
-                "address" => $address
-
+                "address" => $address,
+                "picture" => $row['picture']
             )
 			
 		);
