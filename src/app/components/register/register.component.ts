@@ -14,9 +14,9 @@ import {tap} from "rxjs";
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
-  registerForm: FormGroup;
-  showError : boolean = false;
-  @Input() errorMessage! : string;
+  registerForm: FormGroup; //Le formulaire
+  showError : boolean = false; //Variable pour afficher un message d'erreur
+  @Input() errorMessage! : string; //Le message d'erreur
 
   constructor(private formBuilder: FormBuilder, private router: Router, private http: HttpClient) {
 
@@ -53,7 +53,7 @@ export class RegisterComponent {
           };
 
           //Requete POST PHP
-          this.http.post<any>('http://localhost/WE4B/register.php', data)
+          this.http.post<any>('http://localhost/we4b_jkimenau_echaussoy_tfridblatt/register.php', data)
             .pipe(
               tap(response => {
                 if (response.success == "true") {
@@ -71,6 +71,9 @@ export class RegisterComponent {
         }
       }
     } else {
+      //Gestion des cas des erreurs
+      //Qu'est ce qui a rendu le form invalide ?
+      //Une fois la réponse, on affiche le bon message
       this.showError = true;
       if (this.registerForm.get('email')?.hasError('email')) {
         this.errorMessage = "Veuillez saisir une adresse email valide."

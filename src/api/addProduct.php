@@ -23,6 +23,7 @@ if ($data) {
     $city = $data->city;
     $road = $data->road;
     $category = $data->category;
+    $nb_photo = $data->nb_photo;
     $num_road = $data->num_road;
     $price = $data->price;
     $shippable = $data->shippable;
@@ -49,7 +50,7 @@ if ($data) {
             $user_id = $rows["id"];
 
             $query = "INSERT INTO `offre`(`titre`, `nb_photo`, `prix`, `detail`, `livrable`, `categorie`, `id_utilisateur`, `adresse`) 
-            VALUES ('$title','5','$price','$description','$shippable','$category','$user_id','$lastInsertId')";
+            VALUES ('$title','$nb_photo','$price','$description','$shippable','$category','$user_id','$lastInsertId')";
 
             $result = $conn->query($query);
 

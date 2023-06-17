@@ -86,7 +86,7 @@ export class UserService {
 
     };
 
-    this.http.post<any>('http://localhost/projet/src/update.php', data)
+    this.http.post<any>('http://localhost/we4b_jkimenau_echaussoy_tfridblatt/update.php', data)
       .pipe(
         tap(response => {
           if (response.success == "true") {
@@ -94,8 +94,8 @@ export class UserService {
               this.logged_user.address = this.logged_user.address || {};
               this.logged_user.address.id = parseInt(response.id);
           }
-            this.router.navigate(['/offer-list']);
-          } 
+            this.router.navigate(['/user-profile']);
+          }
         })
       )
       .subscribe();

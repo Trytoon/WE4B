@@ -19,6 +19,15 @@
             <label class="form-label" for="description">Description :</label>
             <textarea type="text" class="form-control" id="description" formControlName="description" placeholder="Entrez une description de l'offre"></textarea>
           </div>
+          
+          <!-- Photos -->
+          <div class="mb-3">
+            <label for="photos" class="form-label">Nombre de photos</label>
+            <div class="input-group">
+              <input type="number" class="form-control" name="nb_photo" min="0" max="6" formControlName="nb_photo">
+            </div>
+            <!-- <input class="form-control" type="file" id="photos" formControlName="photos" multiple> -->
+          </div>
 
           <!-- Prix -->
           <div class="mb-4">
@@ -37,11 +46,6 @@
             </select>
           </div>
 
-          <!-- Photos -->
-<!--          <div class="mb-3">-->
-<!--            <label for="photos" class="form-label">Photo(s)</label>-->
-<!--            <input class="form-control" type="file" id="photos" formControlName="photos" multiple>-->
-<!--          </div>-->
 
           <!-- Livrable -->
           <div class="mb-4">

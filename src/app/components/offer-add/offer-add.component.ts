@@ -18,12 +18,14 @@ import {UserService} from "../../services/user.service";
   styleUrls: ['./offer-add.component.css']
 })
 export class OfferAddComponent {
-  addOfferForm: FormGroup;
-  showError : boolean = false;
+  addOfferForm: FormGroup; //Forumlaire d'ajout des offres
+  showError : boolean = false; //Pour afficher une erreur en cas de besoin
 
+  //La liste de catégories dans la liste déroulantes. ID correspond à l'ID dans la BDD pour pouvoir filtrer
+  //name est le nom de la catégorie affiché à l'écran
   categories: { id: string; name: string }[] = [];
 
-  @Input() errorMessage! : string;
+  @Input() errorMessage! : string; //Le message d'erreur
 
   constructor(private formBuilder: FormBuilder, private router: Router, private http: HttpClient, public offerService : OfferService, public userService :UserService) {
 
@@ -38,6 +40,7 @@ export class OfferAddComponent {
       price: new FormControl('', [Validators.required, Validators.min(0)]),
       shippable: new FormControl('', [Validators.required]),
       category: new FormControl('', [Validators.required]),
+      nb_photo: new FormControl('', [Validators.required]),
       // photos: new FormControl('', [Validators.nullValidator]),
       num_road: new FormControl('', [Validators.minLength(0)]),
       road: new FormControl('', [Validators.required, Validators.maxLength(255)]),
@@ -45,6 +48,7 @@ export class OfferAddComponent {
       zip_code: new FormControl('', [Validators.minLength(5)]),
     });
 
+    //Recupre la liste des catégories en fonctions de la bdd et en temps réél
     this.offerService.getCategories().subscribe(categories => {
       this.categories = categories;
     });
@@ -65,6 +69,7 @@ export class OfferAddComponent {
           price : this.addOfferForm.get('price')?.value,
           shippable : this.addOfferForm.get('shippable')?.value,
           category : this.addOfferForm.get('category')?.value,
+          nb_photo: this.addOfferForm.get('nb_photo')?.value,
           num_road : this.addOfferForm.get('num_road')?.value,
           road : this.addOfferForm.get('road')?.value,
           city : this.addOfferForm.get('city')?.value,
@@ -72,8 +77,8 @@ export class OfferAddComponent {
           username : this.userService.logged_user?.nickname
         }
 
-        //Requete post
-        this.http.post<any>('http://localhost/WE4B/addProduct.php', data)
+        //Envoie de toutes les données de la nouvelle offre au backend
+        this.http.post<any>('http://localhost/we4b_jkimenau_echaussoy_tfridblatt/addProduct.php', data)
           .pipe(
             tap(response => {
               if (response.success == "true") {

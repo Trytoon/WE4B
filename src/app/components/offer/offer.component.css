@@ -6,6 +6,11 @@
   max-height: 300px;
 }
 
+.card:hover {
+  cursor: pointer;
+  box-shadow: 3px 4px #b3b3b3;
+}
+
 .delivery-option {
   background-color: #c5e0b4;
   display: inline;

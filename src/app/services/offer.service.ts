@@ -6,10 +6,9 @@ Regroupe toutes les fonctions qui permettent de communiquer avec le back-end por
 
 import {Injectable} from '@angular/core';
 import {Offer} from "../../classes/Offer";
-import {BehaviorSubject, map, Observable, of} from "rxjs";
+import {BehaviorSubject, map, Observable} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {Address} from "../../classes/Address";
-import {UserService} from "./user.service";
 
 @Injectable({
   providedIn: 'root'
@@ -20,21 +19,17 @@ export class OfferService {
 
   //Ces objects sont obeservés pour permettre la programmation réctive
   filteredOffers: BehaviorSubject<Offer[]> = new BehaviorSubject<Offer[]>([]);
-  offerArray : Offer[] = [];
 
-  constructor(public http: HttpClient, public userService : UserService) {}
-
-  getOfferByIndex(idx : number) : Offer {
-    return this.offerArray[idx];
-  }
+  constructor(public http: HttpClient) {}
 
   //Fonction d'application des filtres. Retourne le tableau des offres triées. Objet écouté par le OfferList component
+  //A chaque fois qu'on veut afficher une liste de produit, le paramètre data change
+  //Et indique au backend la bonne requete à effectuer
   applyFilters(filter: any): void {
-    //this.filteredOffers.next([]);
     if (filter === null) {
       filter = { filter: null };
     }
-    this.http.post<any>('http://localhost/WE4B/filter.php', filter).subscribe(response => {
+    this.http.post<any>('http://localhost/we4b_jkimenau_echaussoy_tfridblatt/filter.php', filter).subscribe(response => {
       if (response.success === true && response.offers) {
         const offers = response.offers.map((offerData: any) => {
 
@@ -62,8 +57,10 @@ export class OfferService {
             address
           );
         });
+        //On "publie" la valeur à tous les objets abonnés. Ici, la liste des offres filtrées
         this.filteredOffers.next(offers);
       } else {
+        // En cas d'erreurs, la liste des offres triées est vide
         this.filteredOffers.next([]);
       }
     });
@@ -72,7 +69,7 @@ export class OfferService {
   //Interroge la base de données et retourne une liste de toutes les catégories existantes sur le site.
   //On exploite cette liste dans des listes déroulantes ensuite
   getCategories(): Observable<{ id: string, name: string }[]> {
-    return this.http.post<any>('http://localhost/WE4B/fetchCategories.php', null).pipe(
+    return this.http.post<any>('http://localhost/we4b_jkimenau_echaussoy_tfridblatt/fetchCategories.php', null).pipe(
       map(response => {
         if (response.success === true && response.categories) {
           return response.categories.map((category: any) => {
@@ -85,33 +82,9 @@ export class OfferService {
     );
   }
 
-
-  //Pour un utilisateur donné, interroge la base de données et recupère tous les produits likés par l'utilisateur
-  //Ecouté dans OfferComponentList puis réinjecté vers chaque produit
-  getUserLikeStatut(): Observable<string[]> {
-    if (this.userService.user_logged()) {
-      const data = {
-        username: this.userService.logged_user?.nickname,
-      };
-
-      return this.http.post<any>('http://localhost/WE4B/userLikeStatut.php', data)
-        .pipe(
-          map(response => {
-            if (response.success === "true" && response.offreIds) {
-              return response.offreIds;
-            } else {
-              return [];
-            }
-          })
-        );
-    } else {
-      return of([]);
-    }
-  }
-
-  
+  //Recupere les infos d'une offre pour un ID donné
   getOfferDetails(id: number): Observable<any[]> {
-    return this.http.post<any>('http://localhost/WE4B/fetchOffer.php', { id }).pipe(
+    return this.http.post<any>('http://localhost/we4b_jkimenau_echaussoy_tfridblatt/fetchOffer.php', { id }).pipe(
       map(response => {
         if (response.success === true && response.offerdetail) {
           return [response.offerdetail];
@@ -122,14 +95,19 @@ export class OfferService {
     );
   }
 
+  //Recupere les images d'une offre pour un ID donné? Il construit la chaine de caractères associant le chemin des images
+  //et le dossier correspondant dans le serveur angular (dossier local dans notre exemple)
   getOfferPictures(offer : Offer): string[] {
-    // const offerWithId : Offer | undefined = this.offerArray.find(offer => offer.id === idOffer);
     let pathsPictures: string[] = []
-    
+
     if (offer) {
-      for (let j : number = 1; j <= (offer.nb_pictures as number); j++) {
-        console.log('adding path')
-        pathsPictures.push(`src/assets/offerpictures/offer${offer.id}/${j}.jpg`)
+
+      if (offer.nb_pictures == 0) {
+        pathsPictures.push(`assets/offerpictures/offerdefault/default.png`)
+      } else {
+        for (let j: number = 1; j <= offer.nb_pictures; j++) {
+          pathsPictures.push(`assets/offerpictures/offer${offer.id}/${j}.jpg`)
+        }
       }
     }
     return pathsPictures

@@ -3,7 +3,7 @@ function ConnectDatabase() {
 // Create connection
     $servername = "localhost";
     $username = "root";
-    $password = "root";
+    $password = "";
     $dbname = "leboncoin";
 
     global $conn;

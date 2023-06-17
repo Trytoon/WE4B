@@ -6,6 +6,7 @@ Explications dans le composant Register
 import {Component} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {OfferService} from "../../services/offer.service";
+import {UserService} from "../../services/user.service";
 
 @Component({
   selector: 'app-filter',
@@ -18,7 +19,7 @@ export class FilterComponent {
 
   categories: { id: string; name: string }[] = [];
 
-  constructor(private formBuilder : FormBuilder, public offerService : OfferService) {
+  constructor(private formBuilder : FormBuilder, public offerService : OfferService, public userService : UserService) {
     this.filterForm = this.formBuilder.group({
       deps: new FormControl(),
       cats: new FormControl(),
@@ -27,39 +28,42 @@ export class FilterComponent {
       productName: new FormControl(),
     });
 
-
-    this.offerService.applyFilters(null)
+    //Recuperation des catégories existantes dans la base de données en temps réél
     this.offerService.getCategories().subscribe(categories => {
       this.categories = categories;
     });
   }
 
-
-
+  //Soumission du formulaire et envoi des données des filtres
   onSubmit() {
-
     let productName = this.filterForm.get("productName")?.value;
     const categorie = this.filterForm.get("cats")?.value;
     const departement = this.filterForm.get("deps")?.value;
     const minPrice = this.filterForm.get("minPrice")?.value;
     const maxPrice = this.filterForm.get("maxPrice")?.value;
+    let data;
 
-    //Si il n'y a que des espaces, alors on affichera tous les produits (donc il n'y a aucun filtre par nom)
-    if (productName?.trim() == "") {
-      productName = null;
+    //On envoie l'information sur l'utilisateur si il est login pour gerer correctement l(affichage des likes dans le backend
+    if (this.userService.user_logged()) {
+      data = {
+        productName: productName,
+        minPrice : minPrice,
+        maxPrice : maxPrice,
+        categorie : categorie,
+        departement: departement,
+        username : this.userService.logged_user?.nickname
+      };
+    } else {
+      data = {
+        productName: productName,
+        minPrice : minPrice,
+        maxPrice : maxPrice,
+        categorie : categorie,
+        departement: departement,
+      };
     }
 
-    const data = {
-      productName: productName,
-      minPrice : minPrice,
-      maxPrice : maxPrice,
-      categorie : categorie,
-      departement: departement
-    };
-
-
-
+    //On applique les filtres ce qui a pour conséquences de modifier la liste des offres triées et affichées dans la liste des offres
     this.offerService.applyFilters(data);
-    this.offerService.getCategories()
   }
 }

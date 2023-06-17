@@ -1,5 +1,18 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid">
+    
+    <div class="navbar-nav">
+      <button class="btn btn-outline-primary me-2" routerLink="/">Accueil</button>
+    </div>
+    <form class="d-flex navbar-nav mx-auto" [formGroup]="searchForm" (ngSubmit)="onSearch()">
+      <button class="btn btn-success" type="submit">Rechercher une offre</button>
+    </form>
+    
+    <div class="navbar-nav ms-auto" *ngIf="userService.user_logged()">
+      <button class="btn btn-outline-primary me-2" routerLink="/add-offer">Ajouter un produit</button>
+      <button class="btn btn-outline-primary me-2" routerLink="/user-profile">Consulter mes informations</button>
+    </div>
+    
     <div class="navbar-nav">
       <div class="me-auto" *ngIf="!userService.user_logged(); else disconnectButton">
         <button class="btn btn-outline-primary me-2" routerLink="/login">Se connecter</button>
@@ -12,14 +25,6 @@
         <button class="btn btn-outline-danger me-2" (click)="userService.logout()">Se deconnecter de {{this.userService.logged_user?.nickname}}</button>
       </ng-template>
     </div>
-
-    <div class="navbar-nav mx-auto">
-      <button class="btn btn-outline-primary me-2" routerLink="/">Accueil</button>
-    </div>
-
-    <form class="d-flex" [formGroup]="searchForm" (ngSubmit)="onSearch()">
-      <button class="btn btn-success" type="submit">Search</button>
-    </form>
   </div>
 </nav>
 
