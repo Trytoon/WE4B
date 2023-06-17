@@ -6,44 +6,44 @@
         <hr><br>
         <form role="form">
           <div class="mb-4 form-group">
-            <label class="control-label">Nom:</label>
+            <label class="control-label">Prénom :</label>
             <input class="form-control" type="text" [(ngModel)]="user.first_name" name="first_name">
           </div>
           <div class="mb-4 form-group">
-            <label class="control-label">Prénom:</label>
+            <label class="control-label">Nom :</label>
             <input class="form-control" type="text" [(ngModel)]="user.last_name" name="last_name">
           </div>
           <div class="mb-4 form-group">
-            <label class="control-label">Numéro de rue</label>
+            <label class="control-label">Numéro de rue :</label>
             <input class="form-control" type="number" [(ngModel)]="user.address.number" name="addressnumber" min="0">
           </div>
           <div class="mb-4 form-group">
-            <label class="control-label">Rue</label>
+            <label class="control-label">Rue :</label>
             <input class="form-control" type="text" [(ngModel)]="user.address.street" name="addressstreet">
           </div>
           <div class="mb-4 form-group">
-            <label class="control-label">Ville</label>
+            <label class="control-label">Ville :</label>
             <input class="form-control" type="text" [(ngModel)]="user.address.city" name="addresscity">
           </div>
           <div class="mb-4 form-group">
-            <label class="control-label">Code postal</label>
+            <label class="control-label">Code postal :</label>
             <input class="form-control" type="text" [(ngModel)]="user.address.zip_code" name="addresszip" minlength="5" maxlength="5">
           </div>
           <div class="mb-4 form-group">
-            <label class="control-label">Taper l'ancien mot de passe:</label>
+            <label class="control-label">Taper l'ancien mot de passe :</label>
             <input class="form-control" type="password" value="" [(ngModel)]="oldpassword" name="oldpassword" minlength="8">
           </div>
           <div class="mb-4 form-group">
-            <label class="control-label">Changer le mot de passe:</label>
+            <label class="control-label">Changer le mot de passe :</label>
             <input class="form-control" type="password" value="" [(ngModel)]="password" name="password" minlength="8">
           </div>
           <div class="mb-4 form-group">
-            <label class="control-label">Confirmer le nouveau mot de passe:</label>
+            <label class="control-label">Confirmer le nouveau mot de passe :</label>
             <input class="form-control" type="password" value="" [(ngModel)]="confirmpassword" name="confirmpassword" minlength="8">
           </div>
           <div class="text-center">
             <div class="mb-4">
-              <img src="{{ user.picture }}" class="avatar img-circle" alt="avatar">
+              <img src="{{ user.picture }}" class="avatar img-circle" alt="avatar" width="220" height="220">
             </div>
             <div class="mb-4">
               <label for="photoUpload" class="form-label">Upload a different photo...</label>

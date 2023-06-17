@@ -1,45 +1,50 @@
-<div class="container mt-4">
-  <div class="row">
-    <div class="col-lg-8 offset-lg-2">
-      <div class="card">
-        
-          
-
-        <div id="ourcarousel" class="carousel slide">
-          <div class="carousel-inner">
-            <!-- <img *ngFor="let picturePath of pathsPictures" [src]="picturePath" alt="{{picturePath}}"> -->
-            <div class="carousel-item" *ngFor="let picturePath of pathsPictures; let isFirst = first" [class.active]="isFirst">
-              <img [src]="picturePath" class="d-block w-100" [alt]="picturePath">
+<div class="background-container">
+  <div class="container pt-lg-4 pb-lg-2">
+    <div class="row">
+      <div class="col-lg-8 offset-lg-2">
+        <div class="card mb-lg-4">
+          <div id="ourcarousel" class="carousel slide">
+            <div class="carousel-inner">
+              <div class="carousel-item" *ngFor="let picturePath of pathsPictures; let isFirst = first" [class.active]="isFirst">
+                <img [src]="picturePath" class="d-block w-100" [alt]="picturePath">
+              </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#ourcarousel" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#ourcarousel" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+          <div class="card-body">
+            <h4 class="card-title">{{offerDetails.offer.title}}</h4>
+            <p class="card-text"><strong>Description :</strong> {{offerDetails.offer.description}}</p>
+            <p class="card-text"><strong>Prix :</strong> {{offerDetails.offer.price}} €</p>
+  
+            <p class="card-text" *ngIf="offerDetails.offer.shippable == true; else lieu"><strong>Envoi par livraison</strong></p>
+            <ng-template #lieu>
+              <p class="card-text">
+                <strong>Lieu :</strong><br>
+                {{offerDetails.offer.address.number}} {{offerDetails.offer.address.street}}, <br>
+                {{offerDetails.offer.address.zip_code}} {{offerDetails.offer.address.city}}
+              </p>
+            </ng-template>
+            <p class="card-text"><strong>Date de publication :</strong> {{offerDetails.offer.post_date | date : 'dd/MM/YYYY'}}</p>
+            <hr>
+            <div class="row">
+              <h6>Contact vendeur :</h6>
+              <div class="col-6">
+                <img [src]="offerDetails.seller.picture" [alt]="offerDetails.seller.picture" width="220" height="220">
+              </div>
+              <div class="col-6">
+                <p><strong>Pseudo : </strong>{{offerDetails.offer.seller}}</p>
+                <p><strong>Nom : </strong>{{offerDetails.seller.first_name | titlecase}} {{offerDetails.seller.last_name | uppercase}}</p>
+                <p><strong>Email : </strong>{{offerDetails.seller.email}}</p>
+              </div>
             </div>
           </div>
-          <button class="carousel-control-prev" type="button" data-bs-target="#ourcarousel" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-          </button>
-          <button class="carousel-control-next" type="button" data-bs-target="#ourcarousel" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-          </button>
-        </div>
-        <div class="card-body">
-          <h4 class="card-title">{{offerDetails.offer.title}}</h4>
-          <p class="card-text"><strong>Description :</strong> {{offerDetails.offer.description}}</p>
-          <p class="card-text"><strong>Prix :</strong> {{offerDetails.offer.price}} €</p>
-
-          <p class="card-text" *ngIf="offerDetails.offer.shippable == true; else lieu"><strong>Envoi par livraison</strong></p>
-          <ng-template #lieu>
-            <p class="card-text">
-              <strong>Lieu :</strong><br>
-              {{offerDetails.offer.address.number}} {{offerDetails.offer.address.street}} <br>
-              {{offerDetails.offer.address.zip_code}}, {{offerDetails.offer.address.city}}
-            </p>
-          </ng-template>
-          <p class="card-text"><strong>Date de publication :</strong> {{offerDetails.offer.post_date | date : 'dd/MM/YYYY'}}</p>
-          <hr>
-          <h6>Contact vendeur :</h6>
-          <p><strong>Pseudo : </strong>{{offerDetails.offer.seller}}</p>
-          <p><strong>Nom : </strong>{{offerDetails.seller.first_name | titlecase}} {{offerDetails.seller.last_name | uppercase}}</p>
-          <p><strong>Email : </strong>{{offerDetails.seller.email}}</p>
         </div>
       </div>
     </div>

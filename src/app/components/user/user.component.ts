@@ -34,7 +34,6 @@ export class UserComponent {
 
 
   /*
-
   Vérifie que les données sont correctes. Si elles ne le sont pas, l'utilisateur est alerté.
       Les alertes se font si:
       - un des champs mot de passe est entré, mais pas l'autre

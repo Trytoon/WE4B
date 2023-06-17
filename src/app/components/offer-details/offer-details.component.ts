@@ -18,12 +18,12 @@ export class OfferDetailsComponent {
 
   pathsPictures : string[] = []
 
-  constructor(private activatedRoute: ActivatedRoute, private serviceOffer: OfferService, serviceUser : UserService) {
+  constructor(private activatedRoute: ActivatedRoute, private serviceOffer: OfferService) {
     this.offer_index = parseInt(this.activatedRoute.snapshot.paramMap.get('index') || '0');
 
     this.serviceOffer.getOfferDetails(this.offer_index).subscribe(data => {
       this.offerDetails = data[0];
-
+      
       this.pathsPictures = serviceOffer.getOfferPictures(this.offerDetails.offer)
     });
   }
