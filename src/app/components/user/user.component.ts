@@ -14,6 +14,8 @@ export class UserComponent implements OnInit {
 
   verificationmdp: boolean = true
 
+
+  oldpassword:string=''
   password: string = ''
   confirmpassword: string = '';
   picture: string = "";
@@ -37,19 +39,26 @@ export class UserComponent implements OnInit {
     //Verification des mots de passe
     this.verificationmdp = true
 
-    if (this.password != "" && this.confirmpassword != "") {
+    if (this.password != "" && this.confirmpassword != "" && this.oldpassword!="") {
+      if(this.oldpassword == this.user.password){
+        if (this.password == this.confirmpassword) {
+          if (this.password.length > 7) {
+            this.user.password = this.password
+  
+          } else {
+            window.alert("Votre mot de passe doit faire au moins 8 caractères!")
+            this.verificationmdp = false
+          }
 
-      if (this.password == this.confirmpassword) {
-        if (this.password.length > 7) {
-          this.user.password = this.password
+      }else{
+        window.alert("Vos deux mots de passe ne sont pas concordants!")
+        this.verificationmdp = false
 
-        } else {
-          window.alert("votre mot de passe doit faire au moins 8 caractères!")
-          this.verificationmdp = false
-        }
+      }
+      
       }
       else {
-        window.alert("vos deux mots de passe ne sont pas concordants!")
+        window.alert("Votre ancien mot de passe n'est pas correct!")
         this.verificationmdp = false
       }
     }
