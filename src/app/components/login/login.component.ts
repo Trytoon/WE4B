@@ -18,9 +18,14 @@ import { Address } from "../../../classes/Address";
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
+
+  //Le login form réactif
   loginForm: FormGroup;
-  rememberMe: boolean = false;
+
+  //Variable qui permet d'afficher une erreur quand necessaire
   showError : boolean = false;
+
+  //Le contenu du message d'erreur: ce que l'utilisateur pourra lire
   @Input() errorMessage! : string;
 
   constructor(private formBuilder: FormBuilder, private router: Router, private http: HttpClient, private userService : UserService) {
@@ -47,6 +52,9 @@ export class LoginComponent {
           password: password
         };
 
+        // Suite à la réponse du serveur:
+        // - recupération des donnéeés et initialisation de l'addresse de l'utilisateur
+        // - instanciation de l'utilisateur sur le site avec son addresse correspondante
         this.http.post<any>('http://localhost/we4b_jkimenau_echaussoy_tfridblatt/login.php', data)
           .pipe(
             tap(response => {
@@ -61,6 +69,9 @@ export class LoginComponent {
                         response.adresse.cp
                     );
                 } else {
+                  //L'id -1 signifie que l'utilisateur n'a pas encore d'addresse
+                  //Permet dans le frontend d'afficher une addresse vide
+                  //Puis permet dans la backend d'ajouter une addresse si l'utilisateur la fourni plutot que de l'update
                     address = new Address(-1, "", "", "", "");
                 }
 
@@ -75,8 +86,6 @@ export class LoginComponent {
                     response.user.password,
                     response.user.picture
                 );
-                // console.log(this.userService.logged_user)
-
                 this.router.navigate(['/offer-list']);
               } else {
                 this.showError = true;

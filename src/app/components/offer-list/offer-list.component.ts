@@ -12,8 +12,8 @@ import { UserService } from "../../services/user.service";
 export class OfferListComponent implements OnInit {
   filteredOffers: Offer[] = []; //Les offres filtrées en temps réél grace à OfferService
 
-  textDisplay: string = ""; //Le titre à afficher
-  displayFilterOption: boolean = false; //Pour afficher ou nom le formulaire de filtrage
+  textDisplay: string = ""; //Le titre à afficher (Mes produits / Mes likes etc...)
+  displayFilterOption: boolean = false; //Pour afficher ou nom le formulaire de filtrage des offres
   readyToBeDisplayed: boolean = false; //Pour gerer l'affichage. Une fois seulement que toutes les données ont été envoyées, ca s'affiche à l'écran
   offerCanBeRemoved: boolean = false; // Autorise ou non l'offre à s'enlever de la liste --> Utilisé pour disliker un produit réactivement
 
@@ -25,6 +25,8 @@ export class OfferListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    //Le paramètre username indique au backend, qu'il doit faire des requetes en prenant en compte l'utiisateur login
+    //Pour correctement gérer les likes par exemple
     this.activatedRoute.paramMap.subscribe(params => {
       const page = params.get('page');
 
@@ -34,6 +36,7 @@ export class OfferListComponent implements OnInit {
         if (!this.userService.user_logged()) {
           this.router.navigate(['']);
         } else {
+          // Le paramètre likes indique au backend qu'il doit filtrer uniquement les offres likées de l'utilisateur
           const data = {
             likes: true,
             username: this.userService.logged_user?.nickname,
@@ -57,6 +60,7 @@ export class OfferListComponent implements OnInit {
         if (!this.userService.user_logged()) {
           this.router.navigate(['']);
         } else {
+          // Le paramètre myoffers indique au backend qu'il doit filtrer uniquement les offres likées de l'utilisateur
           const data = {
             myoffers: true,
             username: this.userService.logged_user?.nickname,

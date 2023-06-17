@@ -6,10 +6,9 @@ Regroupe toutes les fonctions qui permettent de communiquer avec le back-end por
 
 import {Injectable} from '@angular/core';
 import {Offer} from "../../classes/Offer";
-import {BehaviorSubject, map, Observable, of} from "rxjs";
+import {BehaviorSubject, map, Observable} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {Address} from "../../classes/Address";
-import {UserService} from "./user.service";
 
 @Injectable({
   providedIn: 'root'
@@ -20,17 +19,13 @@ export class OfferService {
 
   //Ces objects sont obeservés pour permettre la programmation réctive
   filteredOffers: BehaviorSubject<Offer[]> = new BehaviorSubject<Offer[]>([]);
-  offerArray : Offer[] = [];
 
-  constructor(public http: HttpClient, public userService : UserService) {}
-
-  getOfferByIndex(idx : number) : Offer {
-    return this.offerArray[idx];
-  }
+  constructor(public http: HttpClient) {}
 
   //Fonction d'application des filtres. Retourne le tableau des offres triées. Objet écouté par le OfferList component
+  //A chaque fois qu'on veut afficher une liste de produit, le paramètre data change
+  //Et indique au backend la bonne requete à effectuer
   applyFilters(filter: any): void {
-    //this.filteredOffers.next([]);
     if (filter === null) {
       filter = { filter: null };
     }
@@ -62,8 +57,10 @@ export class OfferService {
             address
           );
         });
+        //On "publie" la valeur à tous les objets abonnés. Ici, la liste des offres filtrées
         this.filteredOffers.next(offers);
       } else {
+        // En cas d'erreurs, la liste des offres triées est vide
         this.filteredOffers.next([]);
       }
     });
@@ -85,6 +82,7 @@ export class OfferService {
     );
   }
 
+  //Recupere les infos d'une offre pour un ID donné
   getOfferDetails(id: number): Observable<any[]> {
     return this.http.post<any>('http://localhost/we4b_jkimenau_echaussoy_tfridblatt/fetchOffer.php', { id }).pipe(
       map(response => {
@@ -97,6 +95,8 @@ export class OfferService {
     );
   }
 
+  //Recupere les images d'une offre pour un ID donné? Il construit la chaine de caractères associant le chemin des images
+  //et le dossier correspondant dans le serveur angular (dossier local dans notre exemple)
   getOfferPictures(offer : Offer): string[] {
     let pathsPictures: string[] = []
 

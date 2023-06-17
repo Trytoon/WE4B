@@ -18,12 +18,14 @@ import {UserService} from "../../services/user.service";
   styleUrls: ['./offer-add.component.css']
 })
 export class OfferAddComponent {
-  addOfferForm: FormGroup;
-  showError : boolean = false;
+  addOfferForm: FormGroup; //Forumlaire d'ajout des offres
+  showError : boolean = false; //Pour afficher une erreur en cas de besoin
 
+  //La liste de catégories dans la liste déroulantes. ID correspond à l'ID dans la BDD pour pouvoir filtrer
+  //name est le nom de la catégorie affiché à l'écran
   categories: { id: string; name: string }[] = [];
 
-  @Input() errorMessage! : string;
+  @Input() errorMessage! : string; //Le message d'erreur
 
   constructor(private formBuilder: FormBuilder, private router: Router, private http: HttpClient, public offerService : OfferService, public userService :UserService) {
 
@@ -45,6 +47,7 @@ export class OfferAddComponent {
       zip_code: new FormControl('', [Validators.minLength(5)]),
     });
 
+    //Recupre la liste des catégories en fonctions de la bdd et en temps réél
     this.offerService.getCategories().subscribe(categories => {
       this.categories = categories;
     });
@@ -72,7 +75,7 @@ export class OfferAddComponent {
           username : this.userService.logged_user?.nickname
         }
 
-        //Requete post
+        //Envoie de toutes les données de la nouvelle offre au backend
         this.http.post<any>('http://localhost/we4b_jkimenau_echaussoy_tfridblatt/addProduct.php', data)
           .pipe(
             tap(response => {

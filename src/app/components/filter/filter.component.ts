@@ -28,13 +28,14 @@ export class FilterComponent {
       productName: new FormControl(),
     });
 
+    //Recuperation des catégories existantes dans la base de données en temps réél
     this.offerService.getCategories().subscribe(categories => {
       this.categories = categories;
     });
   }
 
+  //Soumission du formulaire et envoi des données des filtres
   onSubmit() {
-
     let productName = this.filterForm.get("productName")?.value;
     const categorie = this.filterForm.get("cats")?.value;
     const departement = this.filterForm.get("deps")?.value;
@@ -42,6 +43,7 @@ export class FilterComponent {
     const maxPrice = this.filterForm.get("maxPrice")?.value;
     let data;
 
+    //On envoie l'information sur l'utilisateur si il est login pour gerer correctement l(affichage des likes dans le backend
     if (this.userService.user_logged()) {
       data = {
         productName: productName,
@@ -60,7 +62,8 @@ export class FilterComponent {
         departement: departement,
       };
     }
-    this.offerService.getCategories()
+
+    //On applique les filtres ce qui a pour conséquences de modifier la liste des offres triées et affichées dans la liste des offres
     this.offerService.applyFilters(data);
   }
 }

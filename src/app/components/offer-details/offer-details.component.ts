@@ -17,10 +17,6 @@ export class OfferDetailsComponent {
   offerDetails !: OfferDetails;
 
   pathsPictures : string[] = []
-  // constructor(serviceOffer : OfferDetailService, serviceUser : UserService) {
-  //   this.offer = serviceOffer.getOffer();
-  //   this.seller = serviceUser.getUser(); // il faudra recuperer l'utilisateur qui a poste l'offre
-  // }
 
   constructor(private activatedRoute: ActivatedRoute, private serviceOffer: OfferService, serviceUser : UserService) {
     this.offer_index = parseInt(this.activatedRoute.snapshot.paramMap.get('index') || '0');

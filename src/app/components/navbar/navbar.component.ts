@@ -1,6 +1,6 @@
 /*
 Contient la barre de navigation sur le site
-Utilise le routage et un form controlé qui contient juste un bouton submit
+Utilise le routage et un form reactif qui contient juste un bouton submit
  */
 
 import { Component } from '@angular/core';
