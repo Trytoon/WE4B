@@ -17,9 +17,6 @@
       <div class="me-auto" *ngIf="!userService.user_logged(); else disconnectButton">
         <button class="btn btn-outline-primary me-2" routerLink="/login">Se connecter</button>
       </div>
-      <div class="me-auto" *ngIf="userService.user_logged(); ">
-        <button class="btn btn-outline-primary me-2" routerLink="/profil">monprofil</button>
-      </div>
 
       <ng-template #disconnectButton>
         <button class="btn btn-outline-danger me-2" (click)="userService.logout()">Se deconnecter de {{this.userService.logged_user?.nickname}}</button>

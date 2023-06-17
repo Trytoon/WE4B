@@ -1,5 +1,4 @@
 <?php
-
 //ces headers permettent d'éviter tout erreur CORS à cause de la liaison Angular PHP
 header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Methods: POST");

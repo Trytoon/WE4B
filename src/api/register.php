@@ -1,6 +1,5 @@
 <?php
 //ces headers permettent d'éviter tout erreur CORS à cause de la liaison Angular PHP
-
 header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Allow-Origin: * ");
@@ -38,13 +37,11 @@ if ($data) {
     $response = array("success" => "false"); //response http lue par le composant
   } else {
     //on ajoute dans la table utilisateur un utilisateur avec les données données dans le formulaire de création de compte
-
     $query = "INSERT INTO `utilisateur`(`pseudo`, `password`, `email`) VALUES ('$username', '$password', '$email')";
     $result = $conn->query($query);
 
     if ($result) {
     //si la requete à été correctement réussie, alors on renvoie true. Sinon false.
-
       $response = array("success" => "true");
     } else {
       $response = array("success" => "false");

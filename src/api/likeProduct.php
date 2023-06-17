@@ -1,6 +1,5 @@
 <?php
 //ces headers permettent d'éviter tout erreur CORS à cause de la liaison Angular PHP
-
 header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Allow-Origin: * ");
@@ -37,12 +36,10 @@ if ($data) {
 
 		if ($result) {
 		//si la requête à réussi, alors on renvoie succes => true vers Angular.
-
 			$response = array("success" => "true");
 		}
 	}
 	//on recode en JSON pour le renvoyer à Angular	
-
     echo json_encode($response, JSON_UNESCAPED_UNICODE);
 } else {
     echo json_encode($response, JSON_UNESCAPED_UNICODE);

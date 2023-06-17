@@ -39,14 +39,13 @@ if ($data) {
     if (isset($user) && isset($user['adresse'])) {
       $query = "SELECT * FROM adresse WHERE id='" . $user["adresse"] . "'";
       $result = $conn->query($query);
-    //si il y a un resultat, alors cela veut dire que l'utilisateur a bien rempli une adresse.Dans ce cas on retourne à Angular l'adresse en question qui sera initialisée dans le user_logged.
+        //si il y a un resultat, alors cela veut dire que l'utilisateur a bien rempli une adresse.Dans ce cas on retourne à Angular l'adresse en question qui sera initialisée dans le user_logged.
 
-  
       if ($result && $result->num_rows == 1) {
           $adresse = $result->fetch_assoc();
           $response = array("success" => "true", "user" => $user, "adresse" => $adresse);
       } else {
-            //sinon on ne renvoie que le user, et l'adresse sera définie plus tard comme vide avec comme id d'adresse -1
+          //sinon on ne renvoie que le user, et l'adresse sera définie plus tard comme vide avec comme id d'adresse -1
           $response = array("success" => "true", "user" => $user);
       }
   } else {

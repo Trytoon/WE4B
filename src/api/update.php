@@ -1,6 +1,5 @@
 <?php 
 //ces headers permettent d'éviter tout erreur CORS à cause de la liaison Angular PHP
-
 header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Allow-Origin: * ");
@@ -25,8 +24,6 @@ if ($data) {
     $city=$data->city;
     $zip=$data->zip;
     $adresseid=$data->adressid;
-    
-    
     
     //les champs pour la table utilisateur
     $id =$data->id;
@@ -65,7 +62,6 @@ if ($data) {
     } else {
        
         //L'utilisateur supprime son addresse
-
         if (!isset($streetnumber)) {
             $query = "DELETE FROM `adresse` WHERE `adresse`.`id` = '$adresseid'";
             $result = $conn->query($query);
