@@ -1,4 +1,5 @@
 <?php
+//ces headers permettent d'éviter tout erreur CORS à cause de la liaison Angular PHP
 
 header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Methods: POST");
@@ -23,6 +24,8 @@ if ($data) {
   $email = $data->email;
   $password = $data->password;
 
+  //on s'assure de recuperer des valeurs quel'on peut utiliser pour comparer dans la base de données en enlevant les caractères spéciaux.
+
   $username = mysqli_real_escape_string($conn, $username);
   $email = mysqli_real_escape_string($conn, $email);
   $password = mysqli_real_escape_string($conn, $password);
@@ -34,19 +37,23 @@ if ($data) {
   if ($result and $result->num_rows > 0) {
     $response = array("success" => "false"); //response http lue par le composant
   } else {
+    //on ajoute dans la table utilisateur un utilisateur avec les données données dans le formulaire de création de compte
+
     $query = "INSERT INTO `utilisateur`(`pseudo`, `password`, `email`) VALUES ('$username', '$password', '$email')";
     $result = $conn->query($query);
 
     if ($result) {
+    //si la requete à été correctement réussie, alors on renvoie true. Sinon false.
+
       $response = array("success" => "true");
     } else {
       $response = array("success" => "false");
     }
   }
-  echo json_encode($response);
+  echo json_encode($response,JSON_UNESCAPED_UNICODE);
 } else {
   $response = array("success" => "false");
-  echo json_encode($response);
+  echo json_encode($response,JSON_UNESCAPED_UNICODE);
 }
 
 $conn->close();

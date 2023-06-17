@@ -1,4 +1,5 @@
 <?php
+//ces headers permettent d'éviter tout erreur CORS à cause de la liaison Angular PHP
 
 header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Methods: POST");
@@ -12,7 +13,7 @@ include("./database.php");
 global $conn;
 ConnectDatabase();
 
-//$query = "SELECT DISTINCT categorie.id, categorie.nom FROM categorie LEFT JOIN offre ON offre.categorie = categorie.id WHERE offre.categorie IS NOT NULL";
+// on recupere toutes les differentes catégories existant dans la table catégorie
 $query = "SELECT DISTINCT categorie.id, categorie.nom FROM categorie";
 $result = $conn->query($query);
 if ($result) {
@@ -26,11 +27,15 @@ if ($result) {
 		);
 		$categories[] = $category;
 	}
+	//si la requête à réussi, alors on renvoie succes => true vers Angular. On renvoie également en données les catégories.
+
 
 	$response = array("success" => true, "categories" => $categories);
 } else {
 	$response = array("success" => false);
 }
+//on recode en JSON pour le renvoyer à Angular
+
 
 echo json_encode($response, JSON_UNESCAPED_UNICODE);
 

@@ -1,4 +1,5 @@
 <?php 
+//ces headers permettent d'éviter tout erreur CORS à cause de la liaison Angular PHP
 
 header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Methods: POST");
@@ -52,14 +53,14 @@ if ($data) {
             
             if ($result) {
                 $response = array("success" => "true", "id" => $newAddresseID);
-                echo json_encode($response);
+                echo json_encode($response,JSON_UNESCAPED_UNICODE);
             } else {
                 $response = array("success" => "false");
-                echo json_encode($response);
+                echo json_encode($response,JSON_UNESCAPED_UNICODE);
             }
         } else {
             $response = array("success" => "false");
-            echo json_encode($response);
+            echo json_encode($response,JSON_UNESCAPED_UNICODE);
         }
     } else {
        
@@ -74,10 +75,10 @@ if ($data) {
 
             if ($result) {
                 $response = array("success" => "true", "id" => $newAddresseID);
-                echo json_encode($response);
+                echo json_encode($response,JSON_UNESCAPED_UNICODE);
             } else {
                 $response = array("success" => "false");
-                echo json_encode($response);
+                echo json_encode($response,JSON_UNESCAPED_UNICODE);
             }
         } 
         //L'utilisateur met à jour son addresse
@@ -89,16 +90,16 @@ if ($data) {
             $result2 = $conn->query($query2);
             if ($result) {
                 $response = array("success" => "true");
-                echo json_encode($response);
+                echo json_encode($response,JSON_UNESCAPED_UNICODE);
             } else {
                 $response = array("success" => "false");
-                echo json_encode($response);
+                echo json_encode($response,JSON_UNESCAPED_UNICODE);
             }
         }
         
     } 
  } else {
     $response = array("success" => "false");
-    echo json_encode($response);
+    echo json_encode($response,JSON_UNESCAPED_UNICODE);
  }
 
