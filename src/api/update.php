@@ -18,21 +18,22 @@ $request_body = file_get_contents('php://input');
 $data = json_decode($request_body);
 
 if ($data) {
-    //les champs de l'addresse
-    $streetnumber=$data->streetnumber;
-    $street=$data->street;
-    $city=$data->city;
-    $zip=$data->zip;
-    $adresseid=$data->adressid;
-    
-    //les champs pour la table utilisateur
-    $id =$data->id;
-    $username=$data->username;
-    $lastname=$data->lastname;
-    $firstname=$data->firstname;
-    $email=$data->email;
-    $password=$data->password;
-    $picture=$data->picture;
+	// Les champs de l'adresse
+	$streetnumber = mysqli_real_escape_string($conn, $data->streetnumber);
+	$street = mysqli_real_escape_string($conn, $data->street);
+	$city = mysqli_real_escape_string($conn, $data->city);
+	$zip = mysqli_real_escape_string($conn, $data->zip);
+	$adresseid = mysqli_real_escape_string($conn, $data->adressid);
+
+	// Les champs pour la table utilisateur
+	$id = mysqli_real_escape_string($conn, $data->id);
+	$username = mysqli_real_escape_string($conn, $data->username);
+	$lastname = mysqli_real_escape_string($conn, $data->lastname);
+	$firstname = mysqli_real_escape_string($conn, $data->firstname);
+	$email = mysqli_real_escape_string($conn, $data->email);
+	$password = mysqli_real_escape_string($conn, $data->password);
+	$picture = mysqli_real_escape_string($conn, $data->picture);
+
     
     
     
@@ -44,7 +45,6 @@ if ($data) {
         if ($result) {
             $adressID = $conn->insert_id;
             $newAddresseID = $conn->insert_id;
-            //$query = "UPDATE `utilisateur` SET (`adresse`)='$adressID' WHERE utilisateur.id = '$id'";
             $query = "UPDATE `utilisateur` SET `pseudo`='$username', `password`='$password', `email`='$email', `adresse`='$adressID', `nom`='$lastname', `prenom`='$firstname', `picture`='$picture' WHERE utilisateur.id = '$id'";
             $result = $conn->query($query);
             
@@ -61,8 +61,8 @@ if ($data) {
         }
     } else {
        
-        //L'utilisateur supprime son addresse
-        if (!isset($streetnumber)) {
+        //L'utilisateur supprime son addresse --> Un des champs est null (donc pas besoin de verifier si tous les champs sont null car le backend le fait deja)
+        if (!isset($street)) {
             $query = "DELETE FROM `adresse` WHERE `adresse`.`id` = '$adresseid'";
             $result = $conn->query($query);
             $newAddresseID = -1;
@@ -98,4 +98,3 @@ if ($data) {
     $response = array("success" => "false");
     echo json_encode($response,JSON_UNESCAPED_UNICODE);
  }
-

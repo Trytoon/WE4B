@@ -4,7 +4,7 @@ function ConnectDatabase() {
     $servername = "localhost";
     $username = "root";
     $password = "";
-    $dbname = "leboncoin";
+    $dbname = "leboncoing";
 
     global $conn;
     $conn = new mysqli($servername, $username, $password, $dbname);
